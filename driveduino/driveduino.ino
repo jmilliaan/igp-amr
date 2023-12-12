@@ -1,5 +1,9 @@
 #include "MotorControl.h"
 #include "SerialComm.h"
-void setup(){}
+void setup(){
+  initializeComm(9600);
+};
 
-void loop(){};
+void loop(){
+  recvData();
+};
