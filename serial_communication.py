@@ -11,6 +11,7 @@ class SerialCommunication:
             timeout = 1)
         
     def write(self, data):
+        print(data)
         data_to_send = str(data)
         self.connection.write(data_to_send.encode())
 
@@ -30,4 +31,3 @@ if __name__ == "__main__":
     print("done")
     time.sleep(0.5)
     com.close_connection()
-    
