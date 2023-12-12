@@ -7,7 +7,10 @@ void initializeComm(int baud) {
 int recvData() {
   // Read data from serial port and return it (modify as needed)
   if (Serial.available() > 0) {
-    return Serial.read();
-  }
+    int receivedData = Serial.parseInt();
+    Serial.print("Received Data: ");
+    Serial.println(receivedData);
+    return receivedData;
+  };
   return -1; // Return -1 if no data is available
-}
+};
