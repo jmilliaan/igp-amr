@@ -1,5 +1,4 @@
 import picamera
-import picamera.array
 import cv2
 
 def main():
@@ -16,15 +15,11 @@ def main():
                     camera.capture(stream, format="bgr", use_video_port=True)
                     image = stream.array
                     cv2.imshow("Raspberry Pi Camera", image)
-
                     if cv2.waitKey(1) & 0xFF == ord('q'):
                         break
-
-                    # Clear the stream buffer to prepare for the next frame
                     stream.truncate(0)
 
         finally:
-            # Release resources when the script is terminated
             cv2.destroyAllWindows()
 
 if __name__ == "__main__":
