@@ -1,35 +1,43 @@
-import time
+import threading
 import PyLidar3
-import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.animation import FuncAnimation
+import math    
+import time
 
-lidar = PyLidar3.YdLidarX4(port="COM8")
-lidar.Connect()
+def draw():
+    global is_plot
+    while is_plot:
+        plt.figure(1)
+        plt.cla()
+        plt.ylim(-9000,9000)
+        plt.xlim(-9000,9000)
+        plt.scatter(x,y,c='r',s=8)
+        plt.pause(0.001)
+    plt.close("all")
+    
+                
+is_plot = True
+x=[]
+y=[]
+for _ in range(360):
+    x.append(0)
+    y.append(0)
 
-angles = np.array([])
-distances = np.array([])
-x_coords = np.array([])
-y_coords = np.array([])
-
-fig, ax = plt.subplots()
-sc = ax.scatter([], [], s=2, marker='o')
-
-ax.set_xlim(-4000, 4000)
-ax.set_ylim(-4000, 4000)
-ax.xaxis.set_major_locator(plt.MaxNLocator(10))
-ax.yaxis.set_major_locator(plt.MaxNLocator(10))
-ax.grid(True, which='both', linestyle='--', linewidth=0.5, color='gray', alpha=0.5)
-
-def update_plot(frame, data_stream):
-    global angles, distances, x_coords, y_coords
-    data = next(data_stream)
-    angles = np.radians(np.array(list(data.keys())))
-    distances = np.array(list(data.values()))
-    x_coords = distances * np.cos(angles)
-    y_coords = distances * np.sin(angles)
-    sc.set_offsets(np.column_stack((x_coords, y_coords)))
-    return sc, 
-
-animation = FuncAnimation(fig, update_plot, fargs=(lidar.StartScanning(),), frames=None, interval=20, blit=True)
-plt.show()
+port =  input("Enter port name which lidar is connected:") #windows
+Obj = PyLidar3.YdLidarX4(port) #PyLidar3.your_version_of_lidar(port,chunk_size) 
+threading.Thread(target=draw).start()
+if(Obj.Connect()):
+    print(Obj.GetDeviceInfo())
+    gen = Obj.StartScanning()
+    t = time.time() # start time 
+    while (time.time() - t) < 30: #scan for 30 seconds
+        data = next(gen)
+        for angle in range(0,360):
+            if(data[angle]>1000):
+                x[angle] = data[angle] * math.cos(math.radians(angle))
+                y[angle] = data[angle] * math.sin(math.radians(angle))
+    is_plot = False
+    Obj.StopScanning()
+    Obj.Disconnect()
+else:
+    print("Error connecting to device")
