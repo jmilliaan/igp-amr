@@ -39,3 +39,20 @@ void driveMotorAll(const int speedArray[4], const int directionArray[4]){
       driveMotor(i + 1, directionArray[i], speedArray[i]);
   };
 }; 
+
+void forwardSlow(){};
+void reverseSlow(){};
+void rightSlow(){};
+void leftSlow(){};
+
+void forwardFast(){};
+void reverseFast(){};
+void rightFast(){};
+void leftFast(){};
+
+void diagNESlow(){};
+void diagSESlow(){};
+void diagSWSlow(){};
+void diagNWSlow(){};
+
+
