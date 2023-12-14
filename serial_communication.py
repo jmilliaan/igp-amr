@@ -28,7 +28,7 @@ class SerialCommunication:
 if __name__ == "__main__":
     com = SerialCommunication("/dev/ttyUSB0", 9600)
     interval = 3
-    command_set = True
+    command_set = False
     start = time.time()
     while True:
         if not command_set:
