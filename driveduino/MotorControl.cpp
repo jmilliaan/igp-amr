@@ -62,14 +62,14 @@ int leftSlow(){
   return 5;
 };
 
-void forwardFast(){};
-void reverseFast(){};
-void rightFast(){};
-void leftFast(){};
+int forwardFast(){};
+int reverseFast(){};
+int rightFast(){};
+int leftFast(){};
 
-void diagNESlow(){};
-void diagSESlow(){};
-void diagSWSlow(){};
-void diagNWSlow(){};
+int diagNESlow(){};
+int diagSESlow(){};
+int diagSWSlow(){};
+int diagNWSlow(){};
 
 
