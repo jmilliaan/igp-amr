@@ -43,5 +43,5 @@ void setup() {
 void loop() {
   int cmd = recvData();
   commandDrive(cmd);
-  Serial.prinln(cmd);
+  Serial.println(cmd);
 }
