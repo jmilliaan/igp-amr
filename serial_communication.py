@@ -37,6 +37,7 @@ if __name__ == "__main__":
         com.write(command)
         duration = time.time() - start
         if duration >= interval:
+            start = time.time()
             command_set = False
             command = 1
             com.write(1)
