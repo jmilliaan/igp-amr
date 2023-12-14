@@ -43,7 +43,7 @@ void setup() {
 void loop() {
   for (int i = 0; i<numMotors; i++){
     Serial.println(i);
-    driveMotor(i+1, 1, 60);
+    driveMotor(i+1, 1, 100);
     delay(2000);
     stop();
   };
