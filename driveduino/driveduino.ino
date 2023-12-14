@@ -41,11 +41,8 @@ void setup() {
 }
 
 void loop() {
-  // if (Serial.available() > 0) {
-  //   int receivedData = Serial.parseInt();
-  //   Serial.print("Received Data: ");
-  //   Serial.println(receivedData);
-  //   commandDrive(receivedData);
-  // }
-  // else {commandDrive(0);}
+  for (int i = 0; i<numMotors; i++){
+    Serial.println(i);
+    delay(2000);
+  };
 }
