@@ -41,24 +41,20 @@ void driveMotorAll(const int speedArray[4], const int directionArray[4]){
 }; 
 
 void forwardSlow(){
-  int speedArray[4] = {100, 100, 100, 100};
   int directionArray[4] = {1, 1, 1, 1}; 
-  driveMotorAll(speedArray, directionArray);
+  driveMotorAll(globalSlowSpeed_arr, directionArray);
 };
 void reverseSlow(){
-  int speedArray[4] = {100, 100, 100, 100};
   int directionArray[4] = {0, 0, 0, 0}; 
-  driveMotorAll(speedArray, directionArray);
+  driveMotorAll(globalSlowSpeed_arr, directionArray);
 };
 void rightSlow(){
-  int speedArray[4] = {100, 100, 100, 100};
   int directionArray[4] = {0, 1, 1, 0}; 
-  driveMotorAll(speedArray, directionArray);
+  driveMotorAll(globalSlowSpeed_arr, directionArray);
 };
 void leftSlow(){
-  int speedArray[4] = {100, 100, 100, 100};
   int directionArray[4] = {1, 0, 0, 1}; 
-  driveMotorAll(speedArray, directionArray);
+  driveMotorAll(globalSlowSpeed_arr, directionArray);
 };
 
 void forwardFast(){};
