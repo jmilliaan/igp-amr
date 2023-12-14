@@ -8,7 +8,7 @@
 // 4->RHT V1 | 9 ->LHT V2 | 14->DIAG NW V1 | 19->N/A |
 // 5->LHT V1 | 10->N/A    | 15->N/A        | 20->N/A |
 
-void commandDrive(int commandId){
+int commandDrive(int commandId){
   switch (commandId){
     case 1: stop(); break;
     case 2: forwardSlow(); break;
@@ -33,6 +33,7 @@ void commandDrive(int commandId){
   default:
     Serial.println("Unknown Command!");
     break;
+    return 1;
   }
 };
 
@@ -43,5 +44,4 @@ void setup() {
 void loop() {
   int cmd = recvData();
   commandDrive(cmd);
-  Serial.println(cmd);
 }

@@ -5,25 +5,25 @@
 #include "Arduino.h"
 
 void setupMotors();
-void stop();
+int stop();
 void setSpeed(int mot, int speed);
 void setSpeedAll(const int speedArray[4]);
 void driveMotor(int motor, bool direction, int speed);
 void driveMotorAll(const int speedArray[4]);
 
-void forwardSlow();
-void reverseSlow();
-void rightSlow();
-void leftSlow();
+int forwardSlow();
+int reverseSlow();
+int rightSlow();
+int leftSlow();
 
-void forwardFast();
-void reverseFast();
-void rightFast();
-void leftFast();
+int forwardFast();
+int reverseFast();
+int rightFast();
+int leftFast();
 
-void diagNESlow();
-void diagSESlow();
-void diagSWSlow();
-void diagNWSlow();
+int diagNESlow();
+int diagSESlow();
+int diagSWSlow();
+int diagNWSlow();
 
 #endif

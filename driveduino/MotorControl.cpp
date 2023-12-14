@@ -13,9 +13,10 @@ void setupMotors(){
   };
 };
 
-void stop(){
+int stop(){
   int stopSpeedArray[] = {0, 0, 0, 0};
   setSpeedAll(stopSpeedArray);
+  return 1;
 };
 
 void setSpeed(int mot, int speed){
@@ -40,21 +41,25 @@ void driveMotorAll(const int speedArray[4], const int directionArray[4]){
   };
 }; 
 
-void forwardSlow(){
+int forwardSlow(){
   int directionArray[4] = {1, 1, 1, 1}; 
   driveMotorAll(globalSlowSpeed_arr, directionArray);
+  return 2;
 };
-void reverseSlow(){
+int reverseSlow(){
   int directionArray[4] = {0, 0, 0, 0}; 
   driveMotorAll(globalSlowSpeed_arr, directionArray);
+  return 3;
 };
-void rightSlow(){
+int rightSlow(){
   int directionArray[4] = {0, 1, 1, 0}; 
   driveMotorAll(globalSlowSpeed_arr, directionArray);
+  return 4;
 };
-void leftSlow(){
+int leftSlow(){
   int directionArray[4] = {1, 0, 0, 1}; 
   driveMotorAll(globalSlowSpeed_arr, directionArray);
+  return 5;
 };
 
 void forwardFast(){};
