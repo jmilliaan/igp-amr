@@ -12,5 +12,5 @@ int recvData() {
     Serial.println(receivedData);
     return receivedData;
   };
-  return -1; // Return -1 if no data is available
+  return 0;
 };

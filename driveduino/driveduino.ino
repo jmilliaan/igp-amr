@@ -37,15 +37,11 @@ void commandDrive(int commandId){
 };
 
 void setup() {
-  Serial.begin(9600);
+  initializeComm(9600);
 }
 
 void loop() {
-  if (Serial.available() > 0) {
-    int receivedData = Serial.parseInt();
-    Serial.print("Received Data: ");
-    Serial.println(receivedData);
-    commandDrive(receivedData);
-  }
-  else {commandDrive(1);}
+  int cmd = recvData();
+  commandDrive(cmd);
+  Serial.prinln(cmd);
 }
