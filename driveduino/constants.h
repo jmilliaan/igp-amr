@@ -5,7 +5,7 @@
 extern const int numMotors;
 extern int motorPins[4][3];
 extern int globalSlowSpeed;
-extern int globalSlowSpeed_arr;
+extern int globalSlowSpeed_arr[4];
 
 // SERIAL COMMUNICATION RELATED CONSTANTS
 extern const int baudRate;
