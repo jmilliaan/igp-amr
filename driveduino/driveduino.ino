@@ -45,5 +45,6 @@ void loop() {
     Serial.println(i);
     driveMotor(i+1, 1, 60);
     delay(2000);
+    stop();
   };
 }
