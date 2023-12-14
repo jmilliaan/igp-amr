@@ -27,11 +27,16 @@ class SerialCommunication:
 
 if __name__ == "__main__":
     com = SerialCommunication("/dev/ttyUSB0", 9600)
-    interval = 2
+    interval = 3
+    command_set = True
+    start = time.time()
     while True:
-        start = time.time()
-        print("2: Forward, 3: Reverse, 4: Right, 5: Left")
-        order = int(input("Enter direction: "))
-        com.write(order)
-        if time.time() - start >= interval:
-            continue
+        if not command_set:
+            command = int(input("Enter command: "))
+            command_set = True
+        com.write(command)
+        duration = time.time() - start
+        if duration >= interval:
+            command_set = False
+            command = 1
+            com.write(1)
