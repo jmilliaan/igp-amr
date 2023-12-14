@@ -20,7 +20,7 @@ class SerialCommunication:
         for i in range(20):
             for data in data_sequence:
                 self.write(data)
-                time.sleep(3)
+                time.sleep(interval)
 
     def close_connection(self):
         self.connection.close()
@@ -28,7 +28,7 @@ class SerialCommunication:
 if __name__ == "__main__":
     com = SerialCommunication("/dev/ttyUSB0", 9600)
     time.sleep(1)
-    com.send_repeating_data()
+    com.send_repeating_data(4)
     time.sleep(1)
     print("done")
     com.close_connection()
