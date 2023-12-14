@@ -10,7 +10,6 @@
 
 void commandDrive(int commandId){
   switch (commandId){
-    case 0: stop(); break;
     case 1: stop(); break;
     case 2: forwardSlow(); break;
     case 3: reverseSlow(); break;
@@ -42,11 +41,11 @@ void setup() {
 }
 
 void loop() {
-  if (Serial.available() > 0) {
-    int receivedData = Serial.parseInt();
-    Serial.print("Received Data: ");
-    Serial.println(receivedData);
-    commandDrive(receivedData);
-  }
-  else {commandDrive(0);}
+  // if (Serial.available() > 0) {
+  //   int receivedData = Serial.parseInt();
+  //   Serial.print("Received Data: ");
+  //   Serial.println(receivedData);
+  //   commandDrive(receivedData);
+  // }
+  // else {commandDrive(0);}
 }
