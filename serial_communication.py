@@ -26,7 +26,7 @@ class SerialCommunication:
         self.connection.close()
 
 if __name__ == "__main__":
-    com = SerialCommunication("/dev/ttyUSB0", 9600)
+    com = SerialCommunication("/dev/ttyUSB1", 9600)
     interval = 3
     command_set = False
     start = time.time()
