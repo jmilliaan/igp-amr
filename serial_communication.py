@@ -29,15 +29,10 @@ if __name__ == "__main__":
     com = SerialCommunication("/dev/ttyUSB1", 9600)
     interval = 3
     command_set = False
-    start = time.time()
-    while True:
-        if not command_set:
-            command = int(input("Enter command: "))
-            command_set = True
-        com.write(command)
-        duration = time.time() - start
-        if duration >= interval:
-            start = time.time()
-            command_set = False
-            command = 1
-            com.write(1)
+    for i in range(10):
+        for j in range(4):
+            command = j + 1
+            print(command)
+            com.write(command)
+            time.sleep(3)
+        print(i)
