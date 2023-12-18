@@ -42,8 +42,6 @@ void setup() {
 }
 
 void loop() {
-  // int cmd = recvData();
-  // commandDrive(cmd);
   if (Serial.available() > 0){
     int receivedData = Serial.parseInt();
     Serial.print("Received Data: ");

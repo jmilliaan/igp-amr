@@ -36,3 +36,8 @@ if __name__ == "__main__":
             com.write(command)
             time.sleep(3)
         print(i)
+
+
+class Lidar:
+    def __init__(self) -> None:
+        pass
