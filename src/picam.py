@@ -1,6 +1,4 @@
 import picamera
-import cv2
-import time
 
 class RaspberryPiCamera:
     def __init__(self, resolution=(1280, 720), framerate=30):
@@ -13,35 +11,17 @@ class RaspberryPiCamera:
         """
         self.camera = picamera.PiCamera(resolution=resolution, framerate=framerate)
 
-    def capture_image(self, filename="image.jpg"):
+    def capture_continuous(self, callback_function):
         """
-        Capture an image and save it to the specified filename.
+        Capture frames continuously and call the provided callback function for each frame.
 
         Args:
-            filename (str): Path and filename to save the captured image.
+            callback_function: Function to be called with each captured frame as an argument.
         """
-        self.camera.capture(filename)
-
-    def capture_single_frame(self, filename="frame.jpg"):
-        """
-        Capture a single frame from the camera and save it to the specified filename.
-
-        Args:
-            filename (str): Path and filename to save the captured frame.
-        """
-        # Warm up the camera
-        print("Warming up camera...")
-        self.camera.start_preview()
-        time.sleep(2)
-
-        # Capture and save the frame
-        print("Capturing frame...")
-        self.camera.capture(filename)
-
-        # Stop preview and close camera
-        print("Cleaning up...")
-        self.camera.stop_preview()
-        self.camera.close()
+        # Start capturing frames
+        for frame in self.camera.capture_continuous(format="bgr", use_video_port=True):
+            # Pass the frame to the callback function
+            callback_function(frame)
 
     def adjust_camera_settings(self, **kwargs):
         """
@@ -54,15 +34,10 @@ class RaspberryPiCamera:
             self.camera.brightness = value if key == "brightness" else getattr(self.camera, key, value)
 
     def preview_stream(self, window_name="Raspberry Pi Camera Stream"):
-        """
-        Preview the camera stream in a named window.
-
-        Args:
-            window_name (str): Name of the window displaying the camera stream.
-        """
+        
         cv2.namedWindow(window_name)
         while True:
-            frame = self.camera.capture_continuous(format="bgr", use_video_port=True)
+            frame = self.camera.capture_continuous(use_video_port=True)
             frame = next(frame.frames)
             cv2.imshow(window_name, frame)
             if cv2.waitKey(1) & 0xFF == ord("q"):
@@ -76,7 +51,13 @@ class RaspberryPiCamera:
         self.camera.close()
 
 # Example usage
-camera = RaspberryPiCamera()
-camera.capture_single_frame("captured_frame.jpg")
+def process_frame(frame):
+    # Implement your frame processing logic here
+    # For example, perform object detection, track motion, etc.
+    # (This example simply displays the frame size)
+    print(f"Frame size: {frame.array.shape[:2]}")
 
-print("Frame captured successfully!")
+camera = RaspberryPiCamera()
+
+# Start continuous capture and use your custom processing function
+camera.preview_stream()
