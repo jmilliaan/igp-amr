@@ -5,7 +5,7 @@ from picamera.array import PiRGBArray
 import time
 
 class PiCamOpenCV:
-    def __init__(self, resolution=(640, 480), framerate=32):
+    def __init__(self, resolution=(640, 480), framerate=15):
         self.camera = PiCamera()
         self.camera.resolution = resolution
         self.camera.framerate = framerate
@@ -24,7 +24,7 @@ class PiCamOpenCV:
 
     def show_live_stream(self):
         for frame in self.camera.capture_continuous(self.raw_capture, format="bgr", use_video_port=True):
-            image = frame.array
+            image = cv2.flip(frame.array, 0)
 
             cv2.imshow("Live Stream", image)
             key = cv2.waitKey(1) & 0xFF
@@ -40,5 +40,4 @@ class PiCamOpenCV:
 if __name__ == "__main__":
     # Example usage
     picam_opencv = PiCamOpenCV()
-
     picam_opencv.show_live_stream()
