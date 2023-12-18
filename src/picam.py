@@ -67,3 +67,21 @@ class RaspberryPiCamera:
         Release resources and close the camera.
         """
         self.camera.close()
+
+# Check camera functionality if script is directly run
+if __name__ == "__main__":
+    # Create camera object
+    camera = RaspberryPiCamera()
+
+    # Preview camera stream for 5 seconds
+    print("Previewing camera stream for 5 seconds...")
+    camera.preview_stream()
+    cv2.waitKey(5000)
+
+    # Capture an image for confirmation
+    print("Capturing test image...")
+    camera.capture_image("camera_test.jpg")
+
+    # Print success message and close camera
+    print("Camera functionality test successful!")
+    camera.close()
