@@ -41,8 +41,4 @@ if __name__ == "__main__":
     # Example usage
     picam_opencv = PiCamOpenCV()
 
-    # Show a single image
-    picam_opencv.show_image(save_to_png=True)
-
-    # Show live video stream
     picam_opencv.show_live_stream()
