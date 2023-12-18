@@ -46,21 +46,15 @@ class RaspberryPiCamera:
         for key, value in kwargs.items():
             self.camera.brightness = value if key == "brightness" else getattr(self.camera, key, value)
 
-    def preview_stream(self, window_name="Raspberry Pi Camera Stream"):
-        """
-        Preview the camera stream in a named window.
+def preview_stream(self, window_name="Raspberry Pi Camera Stream"):
+    cv2.namedWindow(window_name)
+    while True:
+        frame = self.camera.capture_continuous(format="bgr", use_video_port=True).next()
+        cv2.imshow(window_name, frame)
+        if cv2.waitKey(1) & 0xFF == ord("q"):
+            break
+    cv2.destroyAllWindows()
 
-        Args:
-            window_name (str): Name of the window displaying the camera stream.
-        """
-        cv2.namedWindow(window_name)
-        while True:
-            frame = self.camera.capture_continuous(format="bgr", use_video_port=True)
-            frame = next(frame.frames)
-            cv2.imshow(window_name, frame)
-            if cv2.waitKey(1) & 0xFF == ord("q"):
-                break
-        cv2.destroyAllWindows()
 
     def close_camera(self):
         """
