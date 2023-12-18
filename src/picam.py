@@ -1,5 +1,6 @@
 import picamera
 import cv2
+import time
 
 class RaspberryPiCamera:
     def __init__(self, resolution=(1280, 720), framerate=30):
@@ -31,7 +32,7 @@ class RaspberryPiCamera:
         # Warm up the camera
         print("Warming up camera...")
         self.camera.start_preview()
-        sleep(2)
+        time.sleep(2)
 
         # Capture and save the frame
         print("Capturing frame...")
