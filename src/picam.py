@@ -4,7 +4,7 @@ from picamera import PiCamera
 from picamera.array import PiRGBArray
 import time
 
-class PiCamOpenCV:
+class PiCam:
     def __init__(self, resolution=(640, 480), framerate=15):
         self.camera = PiCamera()
         self.camera.resolution = resolution
@@ -37,7 +37,3 @@ class PiCamOpenCV:
     def __del__(self):
         self.camera.close()
 
-if __name__ == "__main__":
-    # Example usage
-    picam_opencv = PiCamOpenCV()
-    picam_opencv.show_live_stream()

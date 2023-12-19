@@ -4,6 +4,7 @@ import PyLidar3
 from serial_communication import SerialCommunication
 import time
 import glob
+from picam import PiCam
 
 def check_port_connection():
     connections = {"lidar":"", "arduino":""}
@@ -49,6 +50,10 @@ def lidar_data(lidar_obj):
 def send_data(comm_obj):
     comm_obj.send_repeating_data(2)
 
+def show_vision(cam_obj):
+    cam_obj.show_live_stream
+
+
 if __name__ == "__main__":
     connection_check = check_port_connection()
     connection_status = connection_check[0]
@@ -60,16 +65,21 @@ if __name__ == "__main__":
         drive_comm = SerialCommunication(
             port=arduino_port, 
             baud_rate=9600)
+        camera = PiCam()
+
         lidar.Connect()
 
         lidar_thread = threading.Thread(target=lidar_data, args=(lidar,))
         sercomm_process = multiprocessing.Process(target=send_data, args=(drive_comm,))
-        
+        vision_thread = threading.Thread(target=show_vision, args=(camera,))
         try:
             lidar_thread.start()
             sercomm_process.start()
+            vision_thread.start()
+
             lidar_thread.join()
             sercomm_process.join()
+            vision_thread.join()
 
         except KeyboardInterrupt:
             for i in range(4):
@@ -78,6 +88,7 @@ if __name__ == "__main__":
 
             lidar_thread.join()
             sercomm_process.join()
+            vision_thread.join()
 
     else: 
         print("Bad port connection!")
