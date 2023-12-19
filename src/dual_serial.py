@@ -5,17 +5,13 @@ from serial_communication import SerialCommunication
 import time
 import glob
 
-
-arduino_port = "/dev/ttyUSB1"
-lidar_port = "/dev/ttyUSB0"
-
 def check_port_connection():
     connections = {"lidar":"", "arduino":""}
     n_connections = len(connections.keys())
     
     ports = glob.glob("/dev/ttyUSB*")
     n_ports = len(ports)
-
+    print("ports: ", ports)
     if n_ports >= n_connections:
         for port in ports:
             print(port, end=" ")
