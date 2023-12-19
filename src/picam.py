@@ -25,11 +25,11 @@ class PiCam:
     def show_live_stream(self):
         for frame in self.camera.capture_continuous(self.raw_capture, format="bgr", use_video_port=True):
             image = cv2.flip(frame.array, 0)
-
-            cv2.imshow("Live Stream", image)
+            print(image[:4])
+            # cv2.imshow("Live Stream", image)
             key = cv2.waitKey(1) & 0xFF
 
-            self.raw_capture.truncate(0)
+            # self.raw_capture.truncate(0)
 
             if key == ord("q"):
                 break
