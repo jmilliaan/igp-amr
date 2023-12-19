@@ -3,8 +3,9 @@ import multiprocessing
 import PyLidar3
 from serial_communication import SerialCommunication
 
-lidar_port = "/dev/ttyUSB1"
 arduino_port = "/dev/ttyUSB0"
+lidar_port = "/dev/ttyUSB1"
+
 
 lidar = PyLidar3.YdLidarX4(
     port=lidar_port
