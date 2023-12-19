@@ -44,8 +44,11 @@ def lidar_data(lidar_obj):
             scan_result = next(scanning_generator)
             cart = generate_cartesian(scan_result)
             bool_map = generate_boolean_spacemap(cart[0], cart[1])
-            print(bool_map)
+            # print(bool_map)
 
+            del cart
+            del bool_map
+            
     except Exception as e:
         print(f"Lidar scanning error: {e}")
     finally:
@@ -58,7 +61,7 @@ def show_vision(cam_obj, framerate):
     delay = round(1 / framerate, 2)
     while True:
         frame = cam_obj.capture_frame()
-        print(f"Frame: {frame[:2]}")
+        print(f"Frame: {frame[0]}")
         time.sleep(delay)
 
 if __name__ == "__main__":
