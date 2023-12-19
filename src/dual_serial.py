@@ -51,7 +51,7 @@ def send_data(comm_obj):
     comm_obj.send_repeating_data(2)
 
 def show_vision(cam_obj):
-    cam_obj.show_live_stream()
+    cam_obj.capture_frame()
 
 
 if __name__ == "__main__":
