@@ -33,10 +33,11 @@ class PiCam:
 
             if key == ord("q"):
                 break
-
-    def capture_frame(self):
-        self.camera.capture(self.raw_capture, format="bgr")
+    
+    def capture_frame(self, save=False):
+        self.camera.capture(self.raw_capture, format="bgr", use_video_port=True)
         image = self.raw_capture.array
+        self.raw_capture.truncate(0)
         return image
 
     def __del__(self):
