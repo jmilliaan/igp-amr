@@ -37,7 +37,6 @@ class PiCam:
     def capture_frame(self):
         self.camera.capture(self.raw_capture, format="bgr")
         image = self.raw_capture.array
-        print(f"image: {image[:2]}")
         return image
 
     def __del__(self):

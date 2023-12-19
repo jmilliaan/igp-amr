@@ -51,8 +51,9 @@ def send_data(comm_obj):
     comm_obj.send_repeating_data(2)
 
 def show_vision(cam_obj):
-    cam_obj.capture_frame()
-
+    while True:
+        frame = cam_obj.capture_frame()
+        print(f"Frame: {frame[:2]}")
 
 if __name__ == "__main__":
     connection_check = check_port_connection()
