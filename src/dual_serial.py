@@ -13,9 +13,8 @@ def check_port_connection():
     n_ports = len(ports)
     end_connection = False
     print(ports)
-
-    if n_ports >= n_connections:
-    
+    if n_ports >= n_connections:    
+        print("connection flag")
         for i in range(n_ports):
             other_idx = not i
             print(ports[i], end=" ")
