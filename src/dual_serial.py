@@ -43,11 +43,11 @@ def lidar_data(lidar_obj):
         while True:
             scan_result = next(scanning_generator)
             cart = generate_cartesian(scan_result)
-            bool_map = generate_boolean_spacemap(cart[0], cart[1])
+            # bool_map = generate_boolean_spacemap(cart[0], cart[1])
             # print(bool_map)
 
             del cart
-            del bool_map
+            # del bool_map
             
     except Exception as e:
         print(f"Lidar scanning error: {e}")
