@@ -5,6 +5,7 @@ from serial_communication import SerialCommunication
 import time
 import glob
 from picam import PiCam
+from mapcalc import generate_cartesian, generate_boolean_spacemap
 
 def check_port_connection():
     connections = {"lidar":"", "arduino":""}
@@ -41,7 +42,10 @@ def lidar_data(lidar_obj):
         scanning_generator = lidar_obj.StartScanning()
         while True:
             scan_result = next(scanning_generator)
-            print("Lidar Scan Result:", list(scan_result.keys())[:10])
+            cart = generate_cartesian(scan_result)
+            bool_map = generate_boolean_spacemap(cart[0], cart[1])
+            print(bool_map)
+
     except Exception as e:
         print(f"Lidar scanning error: {e}")
     finally:
