@@ -3,7 +3,7 @@ import multiprocessing
 import PyLidar3
 from serial_communication import SerialCommunication
 
-arduino_port = "/dev/ttyUSB0"
+arduino_port = "/dev/ttyUSB1"
 lidar_port = "/dev/ttyUSB0"
 
 
@@ -36,9 +36,9 @@ if __name__ == "__main__":
     sercomm_process = multiprocessing.Process(target=send_data)
     try:
         lidar_thread.start()
-        # sercomm_process.start()
+        sercomm_process.start()
         lidar_thread.join()
-        # sercomm_process.join()
+        sercomm_process.join()
     except KeyboardInterrupt:
         lidar_thread.join()
-        # sercomm_process.join()
+        sercomm_process.join()
