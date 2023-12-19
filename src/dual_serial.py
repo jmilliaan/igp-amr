@@ -2,6 +2,7 @@ import threading
 import multiprocessing
 import PyLidar3
 from serial_communication import SerialCommunication
+import time
 
 arduino_port = "/dev/ttyUSB1"
 lidar_port = "/dev/ttyUSB0"
@@ -40,5 +41,9 @@ if __name__ == "__main__":
         lidar_thread.join()
         sercomm_process.join()
     except KeyboardInterrupt:
+        for i in range(4):
+            drive_comm.write(1)
+            time.sleep(0.1)
+            
         lidar_thread.join()
         sercomm_process.join()
