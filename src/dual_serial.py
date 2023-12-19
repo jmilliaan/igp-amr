@@ -4,7 +4,7 @@ import PyLidar3
 from serial_communication import SerialCommunication
 
 arduino_port = "/dev/ttyUSB0"
-lidar_port = "/dev/ttyUSB1"
+lidar_port = "/dev/ttyUSB0"
 
 
 lidar = PyLidar3.YdLidarX4(
