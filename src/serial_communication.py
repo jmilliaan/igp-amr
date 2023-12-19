@@ -24,20 +24,3 @@ class SerialCommunication:
 
     def close_connection(self):
         self.connection.close()
-
-if __name__ == "__main__":
-    com = SerialCommunication("/dev/ttyUSB1", 9600)
-    interval = 3
-    command_set = False
-    for i in range(10):
-        for j in range(4):
-            command = j + 1
-            print(command)
-            com.write(command)
-            time.sleep(3)
-        print(i)
-
-
-class Lidar:
-    def __init__(self) -> None:
-        pass
