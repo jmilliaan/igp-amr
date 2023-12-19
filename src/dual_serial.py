@@ -5,11 +5,24 @@ from serial_communication import SerialCommunication
 import time
 import glob
 
-usb_ports = glob.glob("/dev/ttyUSB*")
-print(usb_ports)
+
 arduino_port = "/dev/ttyUSB1"
 lidar_port = "/dev/ttyUSB0"
 
+def check_port_connection():
+    connections = {"lidar":"", "arduino":""}
+    n_connections = len(connections.keys())
+    
+    ports = glob.glob("/dev/ttyUSB*")
+    n_ports = len(ports)
+
+    if n_ports >= n_connections:
+        for port in ports:
+            print(port)
+    else:
+        print(f"At least {str(n_ports - n_connections)} device(s) is not connected!")
+        return
+    return connections
 
 def lidar_data(lidar_obj):
     try:
@@ -33,7 +46,7 @@ if __name__ == "__main__":
         port=arduino_port, 
         baud_rate=9600
         )
-
+    check_port_connection()
     # lidar.Connect()
 
     # lidar_thread = threading.Thread(target=lidar_data, args=(lidar,))
