@@ -5,40 +5,33 @@ from serial_communication import SerialCommunication
 import time
 import glob
 
-def check_port_connection():
-    connections = {"lidar":"", "arduino":""}
-    n_connections = len(connections.keys())
-    
+LIDAR_IDX = 0
+ARDUINO_IDX = 1
+
+def connect_lidar(port):
+    lidar = PyLidar3.YdLidarX4(port=port)
+    lidar.Connect()
+    device_info = lidar.GetDeviceInfo()
+    return lidar if device_info["model_number"] != '0' else None
+
+def detect_connected_devices():
+    connections = {"lidar": "", "arduino": ""}
     ports = glob.glob("/dev/ttyUSB*")
-    n_ports = len(ports)
-    end_connection = False
-    print(ports)
-    if n_ports >= n_connections:    
-        print("connection flag")
-        for i in range(n_ports):
-            print(f"port: {ports[i]} | ", end=" ")
-            other_idx = not i
-            try_lidar = PyLidar3.YdLidarX4(port=ports[i])
-            try_lidar.Connect()
-            device_info = try_lidar.GetDeviceInfo()
-            print(device_info["model_number"], type(device_info["model_number"]))
-            
-            if device_info["model_number"] != '0':
-                print(f"port {ports[i]} is lidar")
-                connections["lidar"] = ports[i]
-                connections["arduino"] = ports[other_idx]
-                end_connection = True
-                time.sleep(0.2)
-                break
-            try_lidar.Disconnect()
 
-        if end_connection:
-            try_lidar.Disconnect()
+    if len(ports) >= len(connections):
+        for i, port in enumerate(ports):
+            other_idx = ARDUINO_IDX if i == LIDAR_IDX else LIDAR_IDX
 
-        return (True, connections)
+            with connect_lidar(port) as lidar:
+                if lidar:
+                    connections["lidar"] = port
+                    connections["arduino"] = ports[other_idx]
+                    break
+
+        return True, connections
     else:
-        print(f"At least {str(n_connections - n_ports)} device(s) is not connected!")
-        return (False, connections)
+        print(f"At least {len(connections) - len(ports)} device(s) is not connected!")
+        return False, connections
 
 def lidar_data(lidar_obj):
     try:
