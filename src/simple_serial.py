@@ -2,14 +2,16 @@ import PyLidar3
 from serial_communication import SerialCommunication
 
 arduino_port = "/dev/ttyUSB0"
-lidar_port = "/dev/ttyUSB1"
+lidar_port = "/dev/ttyUSB3"
 
 lidar = PyLidar3.YdLidarX4(
     port=lidar_port
     )
 
 lidar.Connect()
-
+lidar.GetDeviceInfo()
+lidar.GetHealthStatus()
+lidar._Start_motor()
 def lidar_data():
     try:
         scanning_generator = lidar.StartScanning()
