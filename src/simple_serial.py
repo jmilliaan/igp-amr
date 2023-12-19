@@ -8,11 +8,11 @@ lidar = PyLidar3.YdLidarX4(
     port=lidar_port)
 
 lidar.Connect()
-print("Device Info: ", end="")
-print(lidar.GetDeviceInfo())
-print("Health Info: ", end="")
-print(lidar.GetHealthStatus())
-lidar._Start_motor()
+# print("Device Info: ", end="")
+# print(lidar.GetDeviceInfo())
+# print("Health Info: ", end="")
+# print(lidar.GetHealthStatus())
+# lidar._Start_motor()
 
 def lidar_data():
     try:
