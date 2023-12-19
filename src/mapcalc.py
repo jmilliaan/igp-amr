@@ -15,9 +15,13 @@ def generate_cartesian(lidar_data):
     y_coords = distances * sine_list
     return x_coords, y_coords
 
-def generate_boolean_spacemap(x_coords, y_coords, map_size=(10_000, 10_000)):
+def generate_boolean_spacemap(x_coords, y_coords, map_size=(12_000, 12_000)):
     x_coordinates = np.round(x_coords).astype(int)
     y_coordinates = np.round(y_coords).astype(int)
+
+    x_coordinates = np.clip(x_coordinates, 0, map_size[1] - 1)
+    y_coordinates = np.clip(y_coordinates, 0, map_size[0] - 1)
+
     spacemap = np.zeros(map_size, dtype=bool)
     spacemap[y_coordinates, x_coordinates] = 1
     return spacemap
