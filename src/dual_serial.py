@@ -56,25 +56,29 @@ if __name__ == "__main__":
     arduino_port = connection_check[1]["arduino"]
     if connection_status:
         print(connection_check)
-        # lidar = PyLidar3.YdLidarX4(port=lidar_port)
-        # drive_comm = SerialCommunication(
-        #     port=arduino_port, 
-        #     baud_rate=9600)
+        lidar = PyLidar3.YdLidarX4(port=lidar_port)
+        drive_comm = SerialCommunication(
+            port=arduino_port, 
+            baud_rate=9600)
+        lidar.Connect()
+
+        lidar_thread = threading.Thread(target=lidar_data, args=(lidar,))
+        sercomm_process = multiprocessing.Process(target=send_data, args=(drive_comm,))
+        
+        try:
+            lidar_thread.start()
+            sercomm_process.start()
+            lidar_thread.join()
+            sercomm_process.join()
+
+        except KeyboardInterrupt:
+            for i in range(4):
+                drive_comm.write(1)
+                time.sleep(0.1)
+
+            lidar_thread.join()
+            sercomm_process.join()
+
     else: 
         print("Bad port connection!")
-    # lidar.Connect()
-
-    # lidar_thread = threading.Thread(target=lidar_data, args=(lidar,))
-    # sercomm_process = multiprocessing.Process(target=send_data, args=(drive_comm,))
-    # try:
-    #     lidar_thread.start()
-    #     sercomm_process.start()
-    #     lidar_thread.join()
-    #     sercomm_process.join()
-    # except KeyboardInterrupt:
-    #     for i in range(4):
-    #         drive_comm.write(1)
-    #         time.sleep(0.1)
-
-    #     lidar_thread.join()
-    #     sercomm_process.join()
+        exit()
