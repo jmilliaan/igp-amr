@@ -41,7 +41,7 @@ def lidar_data(lidar_obj):
         scanning_generator = lidar_obj.StartScanning()
         while True:
             scan_result = next(scanning_generator)
-            print("Lidar Scan Result:", scan_result.keys()[:10])
+            print("Lidar Scan Result:", list(scan_result.keys())[:10])
     except Exception as e:
         print(f"Lidar scanning error: {e}")
     finally:
@@ -89,7 +89,7 @@ if __name__ == "__main__":
             lidar_thread.join()
             sercomm_process.join()
             vision_thread.join()
-            
+
             lidar.Disconnect()
             drive_comm.close_connection()
 

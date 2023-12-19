@@ -24,3 +24,5 @@ class SerialCommunication:
 
     def close_connection(self):
         self.connection.close()
+def show_vision(cam_obj):
+    cam_obj.show_live_stream()
