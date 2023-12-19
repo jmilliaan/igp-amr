@@ -16,10 +16,11 @@ def check_port_connection():
     
         for i in range(n_ports):
             other_idx = (i + 1) % n_ports
-            print(ports[i])
+            print(ports[i], end=" ")
             try_lidar = PyLidar3.YdLidarX4(port=ports[i])
             try_lidar.Connect()
             device_info = try_lidar.GetDeviceInfo()
+            print(device_info["model_number"], type(device_info["model_number"]))
             if device_info["model_number"] != '0':
                 print(f"port {ports[i]} is lidar")
                 connections["lidar"] = ports[i]
