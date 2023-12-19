@@ -16,8 +16,8 @@ def check_port_connection():
     if n_ports >= n_connections:    
         print("connection flag")
         for i in range(n_ports):
-            other_idx = not i
             print(f"port: {ports[i]} | ", end=" ")
+            other_idx = not i
             try_lidar = PyLidar3.YdLidarX4(port=ports[i])
             try_lidar.Connect()
             device_info = try_lidar.GetDeviceInfo()
