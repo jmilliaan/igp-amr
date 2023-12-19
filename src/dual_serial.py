@@ -11,7 +11,7 @@ def check_port_connection():
     
     ports = glob.glob("/dev/ttyUSB*")
     n_ports = len(ports)
-
+    print(ports)
     if n_ports >= n_connections:
     
         for i in range(n_ports):
