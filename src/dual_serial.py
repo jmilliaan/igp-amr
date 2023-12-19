@@ -50,10 +50,12 @@ def lidar_data(lidar_obj):
 def send_data(comm_obj):
     comm_obj.send_repeating_data(2)
 
-def show_vision(cam_obj):
+def show_vision(cam_obj, framerate):
+    delay = round(1 / framerate, 2)
     while True:
         frame = cam_obj.capture_frame()
         print(f"Frame: {frame[:2]}")
+        time.sleep(delay)
 
 if __name__ == "__main__":
     connection_check = check_port_connection()
@@ -72,7 +74,7 @@ if __name__ == "__main__":
 
         lidar_thread = threading.Thread(target=lidar_data, args=(lidar,))
         sercomm_process = multiprocessing.Process(target=send_data, args=(drive_comm,))
-        vision_thread = threading.Thread(target=show_vision, args=(camera,))
+        vision_thread = threading.Thread(target=show_vision, args=(camera, 10, ))
         try:
             lidar_thread.start()
             sercomm_process.start()
