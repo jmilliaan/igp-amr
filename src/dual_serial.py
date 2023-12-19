@@ -18,9 +18,11 @@ def check_port_connection():
 
     if n_ports >= n_connections:
         for port in ports:
-            print(port)
+            print(port, end=" ")
             try_lidar = PyLidar3.YdLidarX4(port=port)
             try_lidar.Connect()
+            device_info = try_lidar.GetDeviceInfo()
+            print(device_info)
             time.sleep(0.5)
             try_lidar.Disconnect()
         return (True, connections)
