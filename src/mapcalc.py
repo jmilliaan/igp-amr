@@ -11,11 +11,11 @@ sine_list = np.sin(theta_list_rad)
 
 def generate_cartesian(lidar_data):
     distances = np.array(list(lidar_data.values()))
-    x_coords = distances * cosine_list * 10
-    y_coords = distances * sine_list * 10
+    x_coords = distances * cosine_list
+    y_coords = distances * sine_list
     return x_coords, y_coords
 
-def generate_boolean_spacemap(x_coords, y_coords, map_size=(100_000, 100_000)):
+def generate_boolean_spacemap(x_coords, y_coords, map_size=(10_000, 10_000)):
     x_coordinates = np.round(x_coords).astype(int)
     y_coordinates = np.round(y_coords).astype(int)
     spacemap = np.zeros(map_size, dtype=bool)
