@@ -26,7 +26,7 @@ def check_port_connection():
             if device_info["model_number"] != '0':
                 print(f"port {ports[i]} is lidar")
                 connections["lidar"] = ports[i]
-                connections["lidar"] = ports[other_idx]
+                connections["arduino"] = ports[other_idx]
                 end_connection = True
                 time.sleep(0.2)
                 break
