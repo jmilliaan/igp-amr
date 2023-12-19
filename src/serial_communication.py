@@ -16,7 +16,7 @@ class SerialCommunication:
         self.connection.write(data_to_send.encode())
 
     def send_repeating_data(self, interval):
-        data_sequence = [2, 3, 4, 5]
+        data_sequence = [1, 2, 3, 4, 5]
         for i in range(20):
             for data in data_sequence:
                 self.write(data)
