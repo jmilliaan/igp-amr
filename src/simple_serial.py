@@ -5,13 +5,15 @@ arduino_port = "/dev/ttyUSB0"
 lidar_port = "/dev/ttyUSB3"
 
 lidar = PyLidar3.YdLidarX4(
-    port=lidar_port
-    )
+    port=lidar_port)
 
 lidar.Connect()
-lidar.GetDeviceInfo()
-lidar.GetHealthStatus()
+print("Device Info: ", end="")
+print(lidar.GetDeviceInfo())
+print("Health Info: ", end="")
+print(lidar.GetHealthStatus())
 lidar._Start_motor()
+
 def lidar_data():
     try:
         scanning_generator = lidar.StartScanning()
