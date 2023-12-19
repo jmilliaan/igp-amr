@@ -11,24 +11,31 @@ def check_port_connection():
     
     ports = glob.glob("/dev/ttyUSB*")
     n_ports = len(ports)
+    end_connection = False
     print(ports)
+
     if n_ports >= n_connections:
     
         for i in range(n_ports):
-            other_idx = (i + 1) % n_ports
+            other_idx = not i
             print(ports[i], end=" ")
             try_lidar = PyLidar3.YdLidarX4(port=ports[i])
             try_lidar.Connect()
             device_info = try_lidar.GetDeviceInfo()
             print(device_info["model_number"], type(device_info["model_number"]))
+            
             if device_info["model_number"] != '0':
                 print(f"port {ports[i]} is lidar")
                 connections["lidar"] = ports[i]
                 connections["lidar"] = ports[other_idx]
-    
-            time.sleep(0.2)
+                end_connection = True
+                time.sleep(0.2)
+                break
             try_lidar.Disconnect()
-            
+
+        if end_connection:
+            try_lidar.Disconnect()
+
         return (True, connections)
     else:
         print(f"At least {str(n_connections - n_ports)} device(s) is not connected!")
