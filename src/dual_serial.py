@@ -39,14 +39,13 @@ def send_data(comm_obj):
     comm_obj.send_repeating_data(2)
 
 if __name__ == "__main__":
-    lidar = PyLidar3.YdLidarX4(
-    port=lidar_port
-    )
-    drive_comm = SerialCommunication(
-        port=arduino_port, 
-        baud_rate=9600
-        )
-    check_port_connection()
+    if check_port_connection():
+        lidar = PyLidar3.YdLidarX4(port=lidar_port)
+        drive_comm = SerialCommunication(
+            port=arduino_port, 
+            baud_rate=9600)
+    else: 
+        print("Bad port connection!")
     # lidar.Connect()
 
     # lidar_thread = threading.Thread(target=lidar_data, args=(lidar,))
