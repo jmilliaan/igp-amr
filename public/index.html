@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebSocket Button App</title>
+    <style>
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+        button {
+            width: 100px;
+            height: 100px;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div class="button-grid">
+        <!-- Generate 9 buttons -->
+        <script>
+            const ws = new WebSocket('ws://192.168.29.219:8000');
+
+            ws.onopen = () => {
+                console.log('WebSocket connected');
+            };
+
+            for (let i = 1; i <= 9; i++) {
+                document.write(`<button onclick="sendButtonPress(${i})">${i}</button>`);
+            }
+
+            function sendButtonPress(number) {
+                ws.send(`Button ${number} pressed`);
+            }
+        </script>
+    </div>
+</body>
+</html>

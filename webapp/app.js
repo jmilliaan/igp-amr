@@ -1,26 +1,26 @@
 const WebSocket = require('ws');
+const express = require('express');
+const http = require('http');
 
-const wss = new WebSocket.Server({port : 8000});
+const app = express();
+const server = http.createServer(app);
+const wss = new WebSocket.Server({ server });
+const port = 8000;
+
+app.use(express.static('public'));
 
 wss.on('connection', (ws) => {
-    // Handle incoming messages from the client
+    console.log('Client connected');
+
     ws.on('message', (message) => {
-      // Process the message
-      console.log('Received message:', message);
-      ws.send('Message received!');
+        console.log('Received:', message);
     });
-  
-    // Handle client disconnection
+
     ws.on('close', () => {
-      console.log('Client disconnected');
+        console.log('Client disconnected');
     });
-  });
+});
 
-  wss.on('error', (error) => {
-    console.error('WebSocket server error:', error);
-  });
-
-wss.on('listening', () => {
-    console.log('WebSocket server listening on port 8000');
-  });
-  
+server.listen(port, () => {
+    console.log(`Server running at http://192.168.29.219:${port}/`);
+});
