@@ -58,7 +58,7 @@ def lidar_data(lidar_obj:PyLidar3.YdLidarX4):
             scan_result = next(scanning_generator)
             cart = generate_cartesian(scan_result)
             bool_map = generate_boolean_spacemap(cart[0], cart[1])
-            print(bool_map[0][:20])
+            print(bool_map[0][:3])
 
             del cart
             del bool_map
@@ -75,7 +75,7 @@ def show_vision(cam_obj:PiCam, framerate):
     delay = round(1 / framerate, 2)
     while True:
         frame = cam_obj.capture_frame()
-        print(f"Frame: {frame[0]}")
+        print(f"Frame: {frame[0][0]}")
         time.sleep(delay)
 
 def get_manual_command(web_obj:WebInterface):
