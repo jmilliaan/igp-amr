@@ -13,7 +13,8 @@ wss.on('connection', (ws) => {
     console.log('Client connected');
 
     ws.on('message', (message) => {
-        console.log('Received:', message);
+        const readMessage = message.toString();
+        console.log('Received:', readMessage);
     });
 
     ws.on('close', () => {
