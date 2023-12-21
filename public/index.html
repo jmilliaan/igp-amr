@@ -24,49 +24,31 @@
             text-align: center;
             margin-top: 50px;
         }
+        .button-grid button {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .btn-number {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .btn-label {
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
     </style>
 </head>
 <body>
     <div class="container">
         <h1>RND PROJECT</h1>
         <h2>Autonomous Mobile Robot</h2>
-        <div class="button-grid">
-            <!-- Generate 9 buttons -->
-            <script>
-                const ws = new WebSocket('ws://192.168.29.219:8000');
-                const holdingInterval = 100;
-                ws.onopen = () => {
-                    console.log('WebSocket connected');
-                };
-
-                for (let i = 1; i <= 9; i++) {
-                    document.write(`<button 
-                                        id="btn${i}" 
-                                        onmousedown="startSending(${i})" 
-                                        onmouseup="stopSending(${i})" 
-                                        onmouseleave="stopSending(${i})"
-                                        ontouchstart="startSending(${i})"
-                                        ontouchend="stopSending(${i})"
-                                    >${i}</button>`);
-                }
-
-                let interval;
-
-                function startSending(number) {
-                    stopSending(); // Ensure no other intervals are running
-                    interval = setInterval(() => {
-                        ws.send(`Button ${number} pressed`);
-                    }, holdingInterval); // Adjust the interval time as needed
-                }
-
-                function stopSending() {
-                    if (interval) {
-                        clearInterval(interval);
-                        interval = null;
-                    }
-                }
-            </script>
-        </div>
+        <div class="button-grid"></div>
     </div>
+    <script src="script.js"></script>
 </body>
 </html>
