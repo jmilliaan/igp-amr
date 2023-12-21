@@ -20,7 +20,7 @@
         <!-- Generate 9 buttons -->
         <script>
             const ws = new WebSocket('ws://192.168.29.219:8000');
-
+            const holdingInterval = 200;
             ws.onopen = () => {
                 console.log('WebSocket connected');
             };
@@ -41,8 +41,8 @@
             function startSending(number) {
                 stopSending(); // Ensure no other intervals are running
                 interval = setInterval(() => {
-                    ws.send(`Button ${number} pressed`);
-                }, 1000); // Adjust the interval time as needed
+                    ws.send(number);
+                }, holdingInterval);
             }
 
             function stopSending() {
