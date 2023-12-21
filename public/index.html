@@ -2,56 +2,71 @@
 <html>
 <head>
     <title>WebSocket Button Press App</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.min.css" rel="stylesheet">
     <style>
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+        h1, h2 {
+            font-weight: bold;
+        }
         .button-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
+            grid-template-columns: repeat(3, 100px);
+            grid-gap: 10px;
+            justify-content: center;
         }
         button {
-            width: 100px;
             height: 100px;
             font-size: 24px;
+        }
+        .container {
+            text-align: center;
+            margin-top: 50px;
         }
     </style>
 </head>
 <body>
-    <div class="button-grid">
-        <!-- Generate 9 buttons -->
-        <script>
-            const ws = new WebSocket('ws://192.168.29.219:8000');
-            const holdingInterval = 200;
-            ws.onopen = () => {
-                console.log('WebSocket connected');
-            };
+    <div class="container">
+        <h1>RND PROJECT</h1>
+        <h2>Autonomous Mobile Robot</h2>
+        <div class="button-grid">
+            <!-- Generate 9 buttons -->
+            <script>
+                const ws = new WebSocket('ws://192.168.29.219:8000');
+                const holdingInterval = 100;
+                ws.onopen = () => {
+                    console.log('WebSocket connected');
+                };
 
-            for (let i = 1; i <= 9; i++) {
-                document.write(`<button 
-                                    id="btn${i}" 
-                                    onmousedown="startSending(${i})" 
-                                    onmouseup="stopSending(${i})" 
-                                    onmouseleave="stopSending(${i})"
-                                    ontouchstart="startSending(${i})"
-                                    ontouchend="stopSending(${i})"
-                                >${i}</button>`);
-            }
-
-            let interval;
-
-            function startSending(number) {
-                stopSending(); // Ensure no other intervals are running
-                interval = setInterval(() => {
-                    ws.send(number);
-                }, holdingInterval);
-            }
-
-            function stopSending() {
-                if (interval) {
-                    clearInterval(interval);
-                    interval = null;
+                for (let i = 1; i <= 9; i++) {
+                    document.write(`<button 
+                                        id="btn${i}" 
+                                        onmousedown="startSending(${i})" 
+                                        onmouseup="stopSending(${i})" 
+                                        onmouseleave="stopSending(${i})"
+                                        ontouchstart="startSending(${i})"
+                                        ontouchend="stopSending(${i})"
+                                    >${i}</button>`);
                 }
-            }
-        </script>
+
+                let interval;
+
+                function startSending(number) {
+                    stopSending(); // Ensure no other intervals are running
+                    interval = setInterval(() => {
+                        ws.send(`Button ${number} pressed`);
+                    }, holdingInterval); // Adjust the interval time as needed
+                }
+
+                function stopSending() {
+                    if (interval) {
+                        clearInterval(interval);
+                        interval = null;
+                    }
+                }
+            </script>
+        </div>
     </div>
 </body>
 </html>
