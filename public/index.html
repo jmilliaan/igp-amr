@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>WebSocket Button App</title>
+    <title>WebSocket Button Press App</title>
     <style>
         .button-grid {
             display: grid;
@@ -26,11 +26,30 @@
             };
 
             for (let i = 1; i <= 9; i++) {
-                document.write(`<button onclick="sendButtonPress(${i})">${i}</button>`);
+                document.write(`<button 
+                                    id="btn${i}" 
+                                    onmousedown="startSending(${i})" 
+                                    onmouseup="stopSending(${i})" 
+                                    onmouseleave="stopSending(${i})"
+                                    ontouchstart="startSending(${i})"
+                                    ontouchend="stopSending(${i})"
+                                >${i}</button>`);
             }
 
-            function sendButtonPress(number) {
-                ws.send(`Button ${number} pressed`);
+            let interval;
+
+            function startSending(number) {
+                stopSending(); // Ensure no other intervals are running
+                interval = setInterval(() => {
+                    ws.send(`Button ${number} pressed`);
+                }, 1000); // Adjust the interval time as needed
+            }
+
+            function stopSending() {
+                if (interval) {
+                    clearInterval(interval);
+                    interval = null;
+                }
             }
         </script>
     </div>
