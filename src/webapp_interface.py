@@ -17,8 +17,7 @@ class WebInterface:
 
     def on_message(self, ws, message):
         print("Received:", message)
-        # Add motor control logic here based on the message
-
+        
     def on_error(self, ws, error):
         print(error)
 
@@ -31,12 +30,3 @@ class WebInterface:
     def stop(self):
         self.ws.close()
 
-if __name__ == "__main__":
-    interface = WebInterface("ws://192.168.29.219:8000")
-    interface.start()
-
-    try:
-        while True:
-            time.sleep(1)
-    except KeyboardInterrupt:
-        interface.stop()

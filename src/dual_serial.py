@@ -81,7 +81,7 @@ if __name__ == "__main__":
             baud_rate=9600)
         camera = PiCam()
         interface = WebInterface(web_url)
-        interface.start
+        interface.start()
 
         lidar.Connect()
 
