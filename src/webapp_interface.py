@@ -11,12 +11,13 @@ class WebInterface:
                                          on_close=self.on_close)
         self.thread = threading.Thread(target=self.ws.run_forever)
         self.thread.daemon = True
+        self.latest_message = 5 
 
     def on_open(self, ws):
         print("WebSocket opened")
 
     def on_message(self, ws, message):
-        print("Received:", message)
+        self.latest_message = message
         
     def on_error(self, ws, error):
         print(error)
@@ -29,4 +30,6 @@ class WebInterface:
 
     def stop(self):
         self.ws.close()
-
+        
+    def get_latest_message(self):
+        return self.latest_message

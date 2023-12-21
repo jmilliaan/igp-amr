@@ -8,6 +8,19 @@ from picam import PiCam
 from mapcalc import generate_cartesian, generate_boolean_spacemap
 from webapp_interface import WebInterface
 
+manual_command = 5
+web_to_serial_command = {
+    1: 1,
+    2: 2,
+    3: 1,
+    4: 5,
+    5: 1,
+    6: 4,
+    7: 1,
+    8: 3,
+    9: 1,
+}
+
 def check_port_connection():
     connections = {"lidar":"", "arduino":""}
     n_connections = len(connections.keys())
@@ -38,7 +51,7 @@ def check_port_connection():
         print(f"At least {str(n_connections - n_ports)} device(s) is not connected!")
         return (False, connections)
 
-def lidar_data(lidar_obj):
+def lidar_data(lidar_obj:PyLidar3.YdLidarX4):
     try:
         scanning_generator = lidar_obj.StartScanning()
         while True:
@@ -55,15 +68,24 @@ def lidar_data(lidar_obj):
     finally:
         lidar_obj.Disconnect()
 
-def send_data(comm_obj):
+def send_data(comm_obj:SerialCommunication):
     comm_obj.send_repeating_data(2)
 
-def show_vision(cam_obj, framerate):
+def show_vision(cam_obj:PiCam, framerate):
     delay = round(1 / framerate, 2)
     while True:
         frame = cam_obj.capture_frame()
         print(f"Frame: {frame[0]}")
         time.sleep(delay)
+
+def get_manual_command(web_obj:WebInterface):
+    global manual_command
+    while True:
+        cmd = int(web_obj.get_latest_message())
+        manual_command = web_to_serial_command[cmd]
+        print(cmd, end=" | ")
+        print(manual_command)
+        return manual_command
 
 if __name__ == "__main__":
 
@@ -73,29 +95,37 @@ if __name__ == "__main__":
     connection_status = connection_check[0]
     lidar_port = connection_check[1]["lidar"]
     arduino_port = connection_check[1]["arduino"]
+
     if connection_status:
         print(connection_check)
-        lidar = PyLidar3.YdLidarX4(port=lidar_port)
+        
         drive_comm = SerialCommunication(
             port=arduino_port, 
             baud_rate=9600)
+        
         camera = PiCam()
+        
         interface = WebInterface(web_url)
         interface.start()
 
+        lidar = PyLidar3.YdLidarX4(port=lidar_port)
         lidar.Connect()
 
         lidar_thread = threading.Thread(target=lidar_data, args=(lidar,))
         sercomm_process = multiprocessing.Process(target=send_data, args=(drive_comm,))
         vision_thread = threading.Thread(target=show_vision, args=(camera, 10, ))
+        webcomm_thread = threading.Thread(target=get_manual_command, args=(interface, ))
+        
         try:
             lidar_thread.start()
             sercomm_process.start()
             vision_thread.start()
+            webcomm_thread.start()
 
             lidar_thread.join()
             sercomm_process.join()
             vision_thread.join()
+            webcomm_thread.start()
 
         except KeyboardInterrupt:
             for i in range(4):
