@@ -6,7 +6,7 @@ import time
 import glob
 from picam import PiCam
 from mapcalc import generate_cartesian, generate_boolean_spacemap
-from webapp_interface import on_message, on_error, on_close, on_open
+from webapp_interface import WebInterface
 
 def check_port_connection():
     connections = {"lidar":"", "arduino":""}
@@ -66,6 +66,9 @@ def show_vision(cam_obj, framerate):
         time.sleep(delay)
 
 if __name__ == "__main__":
+
+    web_url = "ws://192.168.29.219:8000"
+
     connection_check = check_port_connection()
     connection_status = connection_check[0]
     lidar_port = connection_check[1]["lidar"]
@@ -77,6 +80,8 @@ if __name__ == "__main__":
             port=arduino_port, 
             baud_rate=9600)
         camera = PiCam()
+        interface = WebInterface(web_url)
+        interface.start
 
         lidar.Connect()
 
