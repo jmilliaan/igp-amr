@@ -6,6 +6,7 @@ import time
 import glob
 from picam import PiCam
 from mapcalc import generate_cartesian, generate_boolean_spacemap
+from webapp_interface import on_message, on_error, on_close, on_open
 
 def check_port_connection():
     connections = {"lidar":"", "arduino":""}

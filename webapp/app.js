@@ -14,7 +14,12 @@ wss.on('connection', (ws) => {
 
     ws.on('message', (message) => {
         const readMessage = message.toString();
-        console.log('Received:', readMessage);
+        console.log(readMessage);
+        wss.clients.forEach(client => {
+            if (client !== ws && client.readyState === WebSocket.OPEN) {
+                client.send(readMessage);
+            }
+        });
     });
 
     ws.on('close', () => {

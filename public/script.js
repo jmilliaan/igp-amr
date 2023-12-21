@@ -36,7 +36,7 @@ let interval;
 function startSending(number) {
     stopSending(); // Ensure no other intervals are running
     interval = setInterval(() => {
-        ws.send(`Button ${number} pressed`);
+        ws.send(number);
     }, holdingInterval); // Use the holdingInterval variable
 }
 
