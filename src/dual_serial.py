@@ -1,3 +1,16 @@
+'''
+MAIN PROGRAM
+
+This program integrates:
+1. Camera interface (raspberry pi camera connection)
+2. Lidar interface (serial communication)
+3. Arduino interface (serial communication)
+4. Web app interface (websocket)
+
+Outputs the command to send to the arduino (movement commend)
+'''
+
+
 import threading
 import multiprocessing
 import PyLidar3
@@ -69,7 +82,8 @@ def lidar_data(lidar_obj:PyLidar3.YdLidarX4):
         lidar_obj.Disconnect()
 
 def send_data(comm_obj:SerialCommunication):
-    comm_obj.send_repeating_data(2)
+    while True:
+        comm_obj.write(1)
 
 def show_vision(cam_obj:PiCam, framerate):
     delay = round(1 / framerate, 2)

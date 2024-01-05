@@ -11,7 +11,6 @@ class SerialCommunication:
             timeout=1)
 
     def write(self, data):
-        print(data)
         data_to_send = str(data)
         self.connection.write(data_to_send.encode())
 
