@@ -5,13 +5,19 @@ import numpy as np
 mpu6050 = mpu6050.mpu6050(0x68)
 # Calibration Value (15 Jan 2024, 100 iteration, 200ms Interval)
 gyro_calibration = np.array([13.63114504, -51.42854962, 96.85770992])
-
+accel_calibration = (-0.4018109322449511, 2.227213520018861)
 
 def round_dict_values(input_dict):
     return {key: round(value, 3) for key, value in input_dict.items()}
 
+def get_accel_calibrated(calibration_value):
+    m = calibration_value[0]
+    b = calibration_value[1]
+    az = mpu6050.get_accel_data()["z"]
+    az_offset = az * m + b
+    az_calibrated = az - az_offset
+    return az_calibrated
 
-# Define a function to read the sensor data
 def read_sensor_data():
     accelerometer_data = round_dict_values(mpu6050.get_accel_data())
     gyroscope_data = round_dict_values(mpu6050.get_gyro_data())
@@ -101,16 +107,6 @@ def linear_calibration(calibration_time=10, axis=2):
     
     return m, b
 
-print(linear_calibration())
-    
-
-
-def calibrate_accel(n_iter, interval):
-    for i in range(n_iter):
-        accel_data = mpu6050.get_accel_data()
-        accel_arr = np.array([accel_data["x"], accel_data["y"], accel_data["z"]])
-    return
-
 
 def calibrate_gyro(n_iter, interval):
     print("starting IMU...")
@@ -130,3 +126,6 @@ def calibrate_gyro(n_iter, interval):
     print(f"X, Y, Z Calibration Value: {calibration_value}")
     print(f"Duration: {end}s")
 
+for i in range(100):
+    print(get_accel_calibrated(accel_calibration))
+    time.sleep(0.2)
