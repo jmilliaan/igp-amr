@@ -5,7 +5,7 @@ import numpy as np
 mpu6050 = mpu6050.mpu6050(0x68)
 # Calibration Value (15 Jan 2024, 100 iteration, 200ms Interval)
 gyro_calibration = np.array([13.6311, -51.4285, 96.8577])
-accel_calibration = (-0.4018, 2.2272)
+accel_calibration = (-0.3906, 2.2161)
 
 def round_dict_values(input_dict):
     return {key: round(value, 3) for key, value in input_dict.items()}
