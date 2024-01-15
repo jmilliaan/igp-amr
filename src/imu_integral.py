@@ -50,5 +50,5 @@ def realtime_theta(interval = 0.05):
         print("Stopped")
 
 if __name__ == "__main__":
-    while True:
-        realtime_theta()
+    
+    realtime_theta()
