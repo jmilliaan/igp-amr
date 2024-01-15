@@ -1,6 +1,7 @@
 const WebSocket = require('ws');
 const express = require('express');
 const http = require('http');
+const path = require('path'); // Add this line to use the path module
 
 const app = express();
 const server = http.createServer(app);
@@ -8,6 +9,11 @@ const wss = new WebSocket.Server({ server });
 const port = 8000;
 
 app.use(express.static('public'));
+
+// New route for the root URL
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
 wss.on('connection', (ws) => {
     console.log('Client connected');
@@ -28,5 +34,5 @@ wss.on('connection', (ws) => {
 });
 
 server.listen(port, () => {
-    console.log(`Server running at http://192.168.29.219:${port}/`);
+    console.log(`Server running at http://localhost:${port}/`);
 });
