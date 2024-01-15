@@ -19,9 +19,9 @@ def read_sensor_data():
     return accelerometer_data, gyroscope_data, temperature
 
 def get_linear_acceleration():
-    ax=mpu6050.get_accel_data["x"]
-    ay=mpu6050.get_accel_data["y"]
-    az=mpu6050.get_accel_data["z"]
+    ax=mpu6050.get_accel_data()["x"]
+    ay=mpu6050.get_accel_data()["y"]
+    az=mpu6050.get_accel_data()["z"]
     return ax, ay, az
 
 def linear_calibration(calibration_time=10, axis=2):
