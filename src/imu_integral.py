@@ -44,13 +44,15 @@ def accel_cal():
         ax_offsets = [[],[],[]]
         print("-"*50)
         for direc_ii,direc in enumerate(cal_directions):
-            print(f"   direc_ii, direc: {direc_ii}, {direc}")
+            print(f"    direc_ii, direc: {direc_ii}, {direc}")
             input("-"*8+" Press Enter and Keep IMU Steady to Calibrate the Accelerometer with the -"+\
               ax_qq+"-axis pointed "+direc)
             [mpu6050_conv() for ii in range(0,cal_size)] # clear buffer between readings
             mpu_array = []
             while len(mpu_array)<cal_size:
                 try:
+                    if len(mpu_array) % 5 == 0:
+                        print(len(mpu_array))
                     ax,ay,az = get_accel()
                     mpu_array.append([ax,ay,az]) # append to array
                 except:
