@@ -12,7 +12,7 @@ def round_dict_values(input_dict):
 def read_sensor_data():
     accelerometer_data = round_dict_values(mpu6050.get_accel_data())
     gyroscope_data = round_dict_values(mpu6050.get_gyro_data())
-    temperature = round_dict_values(mpu6050.get_temp())
+    temperature = round(mpu6050.get_temp(), 2)
     return accelerometer_data, gyroscope_data, temperature
 
 
@@ -20,7 +20,7 @@ while True:
     accelerometer_data, gyroscope_data, temperature = read_sensor_data()
     print("Accelerometer data:", accelerometer_data)
     print("Gyroscope data:", gyroscope_data)
-    print("Temp:", round(temperature, 2))
+    print("Temp:", temperature, 2)
     print()
     # Wait for 1 second
     time.sleep(0.5)
