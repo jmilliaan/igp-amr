@@ -1,7 +1,6 @@
 import time,sys
 sys.path.append('../')
 t0 = time.time()
-start_bool = False # if IMU start fails - stop calibration
 import mpu6050
 import numpy as np
 import csv,datetime
@@ -68,41 +67,37 @@ def accel_cal():
     return mpu_offsets
 
 if __name__ == '__main__':
-    if not start_bool:
-        print("IMU not Started - Check Wiring and I2C")
-    else:
-        #
-        ###################################
-        # Accelerometer Gravity Calibration
-        ###################################
-        #
-        accel_labels = ['a_x','a_y','a_z'] # gyro labels for plots
-        cal_size = 1000 # number of points to use for calibration 
-        accel_coeffs = accel_cal() # grab accel coefficients
+    ###################################
+    # Accelerometer Gravity Calibration
+    ###################################
+    #
+    accel_labels = ['a_x','a_y','a_z'] # gyro labels for plots
+    cal_size = 1000 # number of points to use for calibration 
+    accel_coeffs = accel_cal() # grab accel coefficients
 #
-        ###################################
-        # Record new data 
-        ###################################
-        #
-        data = np.array([get_accel() for ii in range(0,cal_size)]) # new values
-        #
-        ###################################
-        # Plot with and without offsets
-        ###################################
-        #
-        plt.style.use('ggplot')
-        fig,axs = plt.subplots(2,1,figsize=(12,9))
-        for ii in range(0,3):
-            axs[0].plot(data[:,ii],
-                        label='${}$, Uncalibrated'.format(accel_labels[ii]))
-            axs[1].plot(accel_fit(data[:,ii],*accel_coeffs[ii]),
-                        label='${}$, Calibrated'.format(accel_labels[ii]))
-        axs[0].legend(fontsize=14);axs[1].legend(fontsize=14)
-        axs[0].set_ylabel('$a_{x,y,z}$ [g]',fontsize=18)
-        axs[1].set_ylabel('$a_{x,y,z}$ [g]',fontsize=18)
-        axs[1].set_xlabel('Sample',fontsize=18)
-        axs[0].set_ylim([-2,2]);axs[1].set_ylim([-2,2])
-        axs[0].set_title('Accelerometer Calibration Calibration Correction',fontsize=18)
-        fig.savefig('accel_calibration_output.png',dpi=300,
-                    bbox_inches='tight',facecolor='#FCFCFC')
-        fig.show()
+    ###################################
+    # Record new data 
+    ###################################
+    #
+    data = np.array([get_accel() for ii in range(0,cal_size)]) # new values
+    #
+    ###################################
+    # Plot with and without offsets
+    ###################################
+    #
+    plt.style.use('ggplot')
+    fig,axs = plt.subplots(2,1,figsize=(12,9))
+    for ii in range(0,3):
+        axs[0].plot(data[:,ii],
+                    label='${}$, Uncalibrated'.format(accel_labels[ii]))
+        axs[1].plot(accel_fit(data[:,ii],*accel_coeffs[ii]),
+                    label='${}$, Calibrated'.format(accel_labels[ii]))
+    axs[0].legend(fontsize=14);axs[1].legend(fontsize=14)
+    axs[0].set_ylabel('$a_{x,y,z}$ [g]',fontsize=18)
+    axs[1].set_ylabel('$a_{x,y,z}$ [g]',fontsize=18)
+    axs[1].set_xlabel('Sample',fontsize=18)
+    axs[0].set_ylim([-2,2]);axs[1].set_ylim([-2,2])
+    axs[0].set_title('Accelerometer Calibration Calibration Correction',fontsize=18)
+    fig.savefig('accel_calibration_output.png',dpi=300,
+                bbox_inches='tight',facecolor='#FCFCFC')
+    fig.show()
