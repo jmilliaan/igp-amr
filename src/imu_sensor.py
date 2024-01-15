@@ -15,18 +15,22 @@ def read_sensor_data():
     temperature = round(mpu6050.get_temp(), 2)
     return accelerometer_data, gyroscope_data, temperature
 
-def calibrate_gyro(n_iter):
+def calibrate_gyro(n_iter, interval):
     print("starting IMU...")
     time.sleep(2)
-    print("IMU Initialized!\nStarting calibration process...")
-    time.sleep(0.5)
+    print(f"IMU Initialized!\nExpected Duration: {n_iter * interval}s\nStarting calibration process...")
+    time.sleep(0.2)
     start = time.time()
+    np_sum = [0, 0, 0]
     for i in range(n_iter):
         gyro_data = mpu6050.get_gyro_data()
         gyro_arr = np.array([gyro_data["x"], gyro_data["y"], gyro_data["z"]])
         print(gyro_arr)
-        time.sleep(0.2)
+        np_sum += gyro_arr
+        time.sleep(interval)
+    calibration_value = np_sum / n_iter
     end = time.time() - start
+    print(f"X, Y, Z Calibration Value: {calibration_value}")
     print(f"Duration: {end}s")
 
-calibrate_gyro(10)
+calibrate_gyro(100, 0.2)
