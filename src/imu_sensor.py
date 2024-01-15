@@ -127,6 +127,8 @@ def calibrate_gyro(n_iter, interval):
     print(f"Duration: {end}s")
 
 if __name__ == "__main__":
-    while True:
-        get_accel_calibrated(accel_calibration)
-        time.sleep(0.5)
+    # while True:
+    #     get_accel_calibrated(accel_calibration)
+    #     time.sleep(0.5)
+    lc = linear_calibration()
+    print(lc)
