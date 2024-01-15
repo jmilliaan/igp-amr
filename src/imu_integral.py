@@ -25,6 +25,7 @@ def realtime_v(interval=0.02):
         while True:
             a_current = accel()
             v += (a_current + a_prev) * interval / 2
+            print(f"a current = {a_current}")
             print(f"V current = {v}")
             a_prev = a_current
             time.sleep(interval)
