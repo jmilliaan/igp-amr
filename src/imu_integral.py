@@ -40,9 +40,11 @@ def accel_cal():
     cal_directions = ["upward","downward","perpendicular to gravity"] # direction for IMU cal
     cal_indices = [2,1,0] # axis indices
     for qq,ax_qq in enumerate(axis_vec):
+        print(f"QQ, AX_QQ: {qq}, {ax_qq}")
         ax_offsets = [[],[],[]]
         print("-"*50)
         for direc_ii,direc in enumerate(cal_directions):
+            print(f"   direc_ii, direc: {direc_ii}, {direc}")
             input("-"*8+" Press Enter and Keep IMU Steady to Calibrate the Accelerometer with the -"+\
               ax_qq+"-axis pointed "+direc)
             [mpu6050_conv() for ii in range(0,cal_size)] # clear buffer between readings
