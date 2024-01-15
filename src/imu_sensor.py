@@ -28,3 +28,5 @@ def calibrate_gyro(n_iter):
         time.sleep(0.2)
     end = time.time() - start
     print(f"Duration: {end}s")
+
+calibrate_gyro(10)
