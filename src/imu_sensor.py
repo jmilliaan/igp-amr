@@ -4,8 +4,8 @@ import numpy as np
 
 mpu6050 = mpu6050.mpu6050(0x68)
 # Calibration Value (15 Jan 2024, 100 iteration, 200ms Interval)
-gyro_calibration = np.array([13.63114504, -51.42854962, 96.85770992])
-accel_calibration = (-0.4018109322449511, 2.227213520018861)
+gyro_calibration = np.array([13.6311, -51.4285, 96.8577])
+accel_calibration = (-0.4018, 2.2272)
 
 def round_dict_values(input_dict):
     return {key: round(value, 3) for key, value in input_dict.items()}
@@ -16,6 +16,7 @@ def get_accel_calibrated(calibration_value):
     az = mpu6050.get_accel_data()["z"]
     az_offset = az * m + b
     az_calibrated = az - az_offset
+    print(f"AZ: {az} | OFFSET: {az_offset} | AZ_CAL: {az_calibrated}")
     return az_calibrated
 
 def read_sensor_data():
@@ -126,4 +127,5 @@ def calibrate_gyro(n_iter, interval):
     print(f"Duration: {end}s")
 
 if __name__ == "__main__":
-    print(linear_calibration())
+    while True:
+        get_accel_calibrated()
