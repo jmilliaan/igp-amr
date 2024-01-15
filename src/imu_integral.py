@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit 
 
 time.sleep(2) # wait for MPU to load and settle
-# 
+mpu6050 = mpu6050.mpu6050(0x68)
 #####################################
 # Accel Calibration (gravity)
 #####################################
