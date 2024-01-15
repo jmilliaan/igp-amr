@@ -1,6 +1,7 @@
 import mpu6050
 import time
 import numpy as np
+from scipy.integrate import cumtrapz
 
 mpu6050 = mpu6050.mpu6050(0x68)
 # Calibration Value (15 Jan 2024, 100 iteration, 200ms Interval)
@@ -33,7 +34,21 @@ def realtime_v(interval=0.02):
     except KeyboardInterrupt:
         print("Stopped")
 
+def realtime_theta(interval = 0.05):
+    w_prev = gyro()
+    theta = np.zeros(3)
+    try:
+        while True:
+            w_current = gyro()
+            theta += (w_current + w_prev) * interval / 2
+            print(f"w current = {w_current  }")
+            print(f"theta current = {theta}")
+            print()
+            w_prev = w_current
+            time.sleep(interval)
+    except KeyboardInterrupt:
+        print("Stopped")
+
 if __name__ == "__main__":
     while True:
-        print(gyro())
-        time.sleep(0.4)
+        realtime_theta()
