@@ -4,29 +4,23 @@ import time
 # Create a new Mpu6050 object
 mpu6050 = mpu6050.mpu6050(0x68)
 
+def round_dict_values(input_dict):
+    return {key: round(value, 2) for key, value in input_dict.items()}
+
+
 # Define a function to read the sensor data
 def read_sensor_data():
-    # Read the accelerometer values
-    accelerometer_data = mpu6050.get_accel_data()
+    accelerometer_data = round_dict_values(mpu6050.get_accel_data())
+    gyroscope_data = round_dict_values(mpu6050.get_gyro_data())
+    temperature = round_dict_values(mpu6050.get_temp())
+    return accelerometer_data, gyroscope_data, temperature
 
-    # Read the gyroscope values
-    gyroscope_data = mpu6050.get_gyro_data()
 
-    # Read temp
-    temperature = mpu6050.get_temp()
-
-    return round(accelerometer_data, 2), round(gyroscope_data, 2), round(temperature, 2)
-
-# Start a while loop to continuously read the sensor data
 while True:
-
-    # Read the sensor data
     accelerometer_data, gyroscope_data, temperature = read_sensor_data()
-
-    # Print the sensor data
     print("Accelerometer data:", accelerometer_data)
     print("Gyroscope data:", gyroscope_data)
-    print("Temp:", temperature)
-
+    print("Temp:", round(temperature, 2))
+    print()
     # Wait for 1 second
-    time.sleep(0.2)
+    time.sleep(0.5)
