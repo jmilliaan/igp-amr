@@ -15,7 +15,7 @@ def read_sensor_data():
     # Read temp
     temperature = mpu6050.get_temp()
 
-    return accelerometer_data, gyroscope_data, temperature
+    return round(accelerometer_data, 2), round(gyroscope_data, 2), round(temperature, 2)
 
 # Start a while loop to continuously read the sensor data
 while True:
