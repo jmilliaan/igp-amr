@@ -30,8 +30,7 @@ def get_linear_acceleration():
     az=mpu6050.get_accel_data()["z"]
     return ax, ay, az
 
-def linear_calibration(calibration_time=10, axis=2):
-    # This is for the math to approximate slope and y-intercept. See video in description :)
+def linear_calibration(calibration_time=5, axis=2):
     num_of_points = 0
     x_sum = 0
     y_sum = 0
@@ -126,6 +125,5 @@ def calibrate_gyro(n_iter, interval):
     print(f"X, Y, Z Calibration Value: {calibration_value}")
     print(f"Duration: {end}s")
 
-for i in range(100):
-    print(get_accel_calibrated(accel_calibration))
-    time.sleep(0.2)
+if __name__ == "__main__":
+    print(linear_calibration())
