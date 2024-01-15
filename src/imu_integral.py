@@ -16,7 +16,7 @@ def accel():
 def gyro():
     gyro_data = mpu6050.get_gyro_data()
     gyro_arr =  np.array([gyro_data["x"], gyro_data["y"], gyro_data["z"]])
-    return gyro_arr + gyro_calibration
+    return gyro_arr - gyro_calibration
 
 def realtime_v(interval=0.02):
     a_prev = accel()
