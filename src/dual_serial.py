@@ -18,7 +18,7 @@ from serial_communication import SerialCommunication
 import time
 import glob
 # from picam import PiCam
-from mapcalc import generate_cartesian, generate_boolean_spacemap
+from mapcalc import Map
 from webapp_interface import WebInterface
 
 manual_command = 5
