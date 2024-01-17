@@ -19,7 +19,9 @@ class SerialCommunication:
         for i in range(20):
             for data in data_sequence:
                 self.write(data)
+                print(f"{i}. Data: {data}")
                 time.sleep(interval)
+            print()
 
     def close_connection(self):
         self.connection.close()
