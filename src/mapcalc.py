@@ -17,4 +17,3 @@ class Map:
             self.grayscale_map = np.copy(self.binary_map)
             self.grayscale_map[self.grayscale_map == 1] = 254
         return self.binary_map
-

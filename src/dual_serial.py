@@ -105,54 +105,57 @@ if __name__ == "__main__":
 
     web_url = "ws://192.168.29.219:8000"
 
-    connection_check = check_port_connection()
-    connection_status = connection_check[0]
+    # connection_check = check_port_connection()
+    # connection_status = connection_check[0]
     lidar_port = connection_check[1]["lidar"]
-    arduino_port = connection_check[1]["arduino"]
-
-    if connection_status:
-        print(connection_check)
-        
-        drive_comm = SerialCommunication(
+    arduino_port = "/dev/ttyUSB0"
+    drive_comm = SerialCommunication(
             port=arduino_port, 
             baud_rate=9600)
+    drive_comm.send_repeating_data(1)
+    # if connection_status:
+    #     print(connection_check)
         
-        camera = PiCam()
+    #     drive_comm = SerialCommunication(
+    #         port=arduino_port, 
+    #         baud_rate=9600)
         
-        interface = WebInterface(web_url)
-        interface.start()
-
-        lidar = PyLidar3.YdLidarX4(port=lidar_port)
-        lidar.Connect()
-
-        lidar_thread = threading.Thread(target=lidar_data, args=(lidar,))
-        sercomm_process = multiprocessing.Process(target=send_data, args=(drive_comm,))
-        vision_thread = threading.Thread(target=show_vision, args=(camera, 10, ))
-        webcomm_thread = threading.Thread(target=get_manual_command, args=(interface, ))
+    #     camera = PiCam()
         
-        try:
-            lidar_thread.start()
-            sercomm_process.start()
-            vision_thread.start()
-            webcomm_thread.start()
+    #     interface = WebInterface(web_url)
+    #     interface.start()
 
-            lidar_thread.join()
-            sercomm_process.join()
-            vision_thread.join()
-            webcomm_thread.start()
+    #     lidar = PyLidar3.YdLidarX4(port=lidar_port)
+    #     lidar.Connect()
 
-        except KeyboardInterrupt:
-            for i in range(4):
-                drive_comm.write(1)
-                time.sleep(0.1)
+    #     lidar_thread = threading.Thread(target=lidar_data, args=(lidar,))
+    #     sercomm_process = multiprocessing.Process(target=send_data, args=(drive_comm,))
+    #     vision_thread = threading.Thread(target=show_vision, args=(camera, 10, ))
+    #     webcomm_thread = threading.Thread(target=get_manual_command, args=(interface, ))
+        
+    #     try:
+    #         lidar_thread.start()
+    #         sercomm_process.start()
+    #         vision_thread.start()
+    #         webcomm_thread.start()
 
-            lidar_thread.join()
-            sercomm_process.join()
-            vision_thread.join()
+    #         lidar_thread.join()
+    #         sercomm_process.join()
+    #         vision_thread.join()
+    #         webcomm_thread.start()
 
-            lidar.Disconnect()
-            drive_comm.close_connection()
+    #     except KeyboardInterrupt:
+    #         for i in range(4):
+    #             drive_comm.write(1)
+    #             time.sleep(0.1)
 
-    else: 
-        print("Bad port connection!")
-        exit()
+    #         lidar_thread.join()
+    #         sercomm_process.join()
+    #         vision_thread.join()
+
+    #         lidar.Disconnect()
+    #         drive_comm.close_connection()
+
+    # else: 
+    #     print("Bad port connection!")
+    #     exit()

@@ -10,8 +10,7 @@ class LIDAR:
     def __init__(self, port):
         self.port = port
         self.lidar = RPLidar(self.port)
-        self.connection = self.lidar.connect()
-
+        
 
 def get_lidar_scan():
     return
