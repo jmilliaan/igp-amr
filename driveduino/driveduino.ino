@@ -67,5 +67,6 @@ void loop() {
       } else if (receivedData >= 10 && receivedData <= 20) {
           stop();
       }
+      
   };
 }
