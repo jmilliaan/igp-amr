@@ -108,7 +108,7 @@ if __name__ == "__main__":
     # connection_check = check_port_connection()
     # connection_status = connection_check[0]
     # lidar_port = connection_check[1]["lidar"]
-    arduino_port = "/dev/ttyUSB0"
+    arduino_port = "/dev/ttyUSB1"
     drive_comm = SerialCommunication(
             port=arduino_port, 
             baud_rate=9600)
