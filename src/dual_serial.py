@@ -34,72 +34,72 @@ web_to_serial_command = {
     9: 1,
 }
 
-def check_port_connection():
-    connections = {"lidar":"", "arduino":""}
-    n_connections = len(connections.keys())
+# def check_port_connection():
+#     connections = {"lidar":"", "arduino":""}
+#     n_connections = len(connections.keys())
     
-    ports = glob.glob("/dev/ttyUSB*")
-    n_ports = len(ports)
-    end_connection = False
-    if n_ports >= n_connections:    
-        for i in range(n_ports):
-            other_idx = not i
-            try_lidar = PyLidar3.YdLidarX4(port=ports[i])
-            try_lidar.Connect()
-            device_info = try_lidar.GetDeviceInfo()
+#     ports = glob.glob("/dev/ttyUSB*")
+#     n_ports = len(ports)
+#     end_connection = False
+#     if n_ports >= n_connections:    
+#         for i in range(n_ports):
+#             other_idx = not i
+#             try_lidar = PyLidar3.YdLidarX4(port=ports[i])
+#             try_lidar.Connect()
+#             device_info = try_lidar.GetDeviceInfo()
             
-            if device_info["model_number"] != '0':
-                connections["lidar"] = ports[i]
-                connections["arduino"] = ports[other_idx]
-                end_connection = True
-                time.sleep(0.2)
-                break
-            try_lidar.Disconnect()
+#             if device_info["model_number"] != '0':
+#                 connections["lidar"] = ports[i]
+#                 connections["arduino"] = ports[other_idx]
+#                 end_connection = True
+#                 time.sleep(0.2)
+#                 break
+#             try_lidar.Disconnect()
 
-        if end_connection:
-            try_lidar.Disconnect()
+#         if end_connection:
+#             try_lidar.Disconnect()
 
-        return (True, connections)
-    else:
-        print(f"At least {str(n_connections - n_ports)} device(s) is not connected!")
-        return (False, connections)
+#         return (True, connections)
+#     else:
+#         print(f"At least {str(n_connections - n_ports)} device(s) is not connected!")
+#         return (False, connections)
 
-def lidar_data(lidar_obj:PyLidar3.YdLidarX4):
-    try:
-        scanning_generator = lidar_obj.StartScanning()
-        while True:
-            scan_result = next(scanning_generator)
-            cart = generate_cartesian(scan_result)
-            bool_map = generate_boolean_spacemap(cart[0], cart[1])
-            print(bool_map[0][:3])
+# # def lidar_data(lidar_obj:PyLidar3.YdLidarX4):
+#     try:
+#         scanning_generator = lidar_obj.StartScanning()
+#         while True:
+#             scan_result = next(scanning_generator)
+#             cart = generate_cartesian(scan_result)
+#             bool_map = generate_boolean_spacemap(cart[0], cart[1])
+#             print(bool_map[0][:3])
 
-            del cart
-            del bool_map
+#             del cart
+#             del bool_map
             
-    except Exception as e:
-        print(f"Lidar scanning error: {e}")
-    finally:
-        lidar_obj.Disconnect()
+#     except Exception as e:
+#         print(f"Lidar scanning error: {e}")
+#     finally:
+#         lidar_obj.Disconnect()
 
 def send_data(comm_obj:SerialCommunication):
     while True:
         comm_obj.write(1)
 
-def show_vision(cam_obj:PiCam, framerate):
-    delay = round(1 / framerate, 2)
-    while True:
-        frame = cam_obj.capture_frame()
-        print(f"Frame: {frame[0][0]}")
-        time.sleep(delay)
+# def show_vision(cam_obj:PiCam, framerate):
+#     delay = round(1 / framerate, 2)
+#     while True:
+#         frame = cam_obj.capture_frame()
+#         print(f"Frame: {frame[0][0]}")
+#         time.sleep(delay)
 
-def get_manual_command(web_obj:WebInterface):
-    global manual_command
-    while True:
-        cmd = int(web_obj.get_latest_message())
-        manual_command = web_to_serial_command[cmd]
-        print(cmd, end=" | ")
-        print(manual_command)
-        return manual_command
+# def get_manual_command(web_obj:WebInterface):
+#     global manual_command
+#     while True:
+#         cmd = int(web_obj.get_latest_message())
+#         manual_command = web_to_serial_command[cmd]
+#         print(cmd, end=" | ")
+#         print(manual_command)
+#         return manual_command
 
 if __name__ == "__main__":
 
@@ -107,7 +107,7 @@ if __name__ == "__main__":
 
     # connection_check = check_port_connection()
     # connection_status = connection_check[0]
-    lidar_port = connection_check[1]["lidar"]
+    # lidar_port = connection_check[1]["lidar"]
     arduino_port = "/dev/ttyUSB0"
     drive_comm = SerialCommunication(
             port=arduino_port, 
