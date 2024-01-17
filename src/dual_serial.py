@@ -113,6 +113,7 @@ if __name__ == "__main__":
             port=arduino_port, 
             baud_rate=9600)
     drive_comm.send_repeating_data(1)
+    
     # if connection_status:
     #     print(connection_check)
         
