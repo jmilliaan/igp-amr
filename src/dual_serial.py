@@ -13,11 +13,11 @@ Outputs the command to send to the arduino (movement commend)
 
 import threading
 import multiprocessing
-import PyLidar3
+# import PyLidar3
 from serial_communication import SerialCommunication
 import time
 import glob
-from picam import PiCam
+# from picam import PiCam
 from mapcalc import generate_cartesian, generate_boolean_spacemap
 from webapp_interface import WebInterface
 
