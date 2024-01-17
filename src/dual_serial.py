@@ -112,7 +112,11 @@ if __name__ == "__main__":
     drive_comm = SerialCommunication(
             port=arduino_port, 
             baud_rate=9600)
-    drive_comm.send_repeating_data(1)
+    while True:
+        print("2: Forward, 3: Reverse, 4: Right, 5: Left")
+        order = int(input("Enter direction: "))
+        drive_comm.write(order)
+        time.sleep(2)
 
     # if connection_status:
     #     print(connection_check)

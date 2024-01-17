@@ -71,5 +71,3 @@ int diagNESlow(){};
 int diagSESlow(){};
 int diagSWSlow(){};
 int diagNWSlow(){};
-
-
