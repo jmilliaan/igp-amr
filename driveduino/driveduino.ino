@@ -46,25 +46,25 @@ void setup() {
 void loop() {
   if (Serial.available() > 0){
     int receivedData = Serial.parseInt();
-    if (commandId == 1) {
+    if (receivedData == 1) {
         stop();
-      } else if (commandId == 2) {
+      } else if (receivedData == 2) {
           forwardSlow();
-      } else if (commandId == 3) {
+      } else if (receivedData == 3) {
           reverseSlow();
-      } else if (commandId == 4) {
+      } else if (receivedData == 4) {
           rightSlow();
-      } else if (commandId == 5) {
+      } else if (receivedData == 5) {
           leftSlow();
-      } else if (commandId == 6) {
+      } else if (receivedData == 6) {
           forwardFast();
-      } else if (commandId == 7) {
+      } else if (receivedData == 7) {
           reverseFast();
-      } else if (commandId == 8) {
+      } else if (receivedData == 8) {
           rightFast();
-      } else if (commandId == 9) {
+      } else if (receivedData == 9) {
           leftFast();
-      } else if (commandId >= 10 && commandId <= 20) {
+      } else if (receivedData >= 10 && receivedData <= 20) {
           stop();
       }
   };
