@@ -39,13 +39,15 @@ int commandDrive(int commandId){
 
 void setup() {
   Serial.begin(9600);
+  setupMotors();
+  stop();
 }
 
 void loop() {
   if (Serial.available() > 0){
     int receivedData = Serial.parseInt();
-    Serial.print("Received Data: ");
-    Serial.println(receivedData);
+    // Serial.print("Received Data: ");
+    // Serial.println(receivedData);
     commandDrive(receivedData);
   };  
 }
