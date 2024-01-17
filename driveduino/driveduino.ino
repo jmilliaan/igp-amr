@@ -46,8 +46,26 @@ void setup() {
 void loop() {
   if (Serial.available() > 0){
     int receivedData = Serial.parseInt();
-    // Serial.print("Received Data: ");
-    // Serial.println(receivedData);
-    commandDrive(receivedData);
-  };  
+    if (commandId == 1) {
+        stop();
+      } else if (commandId == 2) {
+          forwardSlow();
+      } else if (commandId == 3) {
+          reverseSlow();
+      } else if (commandId == 4) {
+          rightSlow();
+      } else if (commandId == 5) {
+          leftSlow();
+      } else if (commandId == 6) {
+          forwardFast();
+      } else if (commandId == 7) {
+          reverseFast();
+      } else if (commandId == 8) {
+          rightFast();
+      } else if (commandId == 9) {
+          leftFast();
+      } else if (commandId >= 10 && commandId <= 20) {
+          stop();
+      }
+  };
 }
