@@ -61,5 +61,5 @@ def setup_serial_port():
 if __name__ == "__main__":
     arduino_port, lidar_port = setup_serial_port()
     webapp = WebInterface("192.168.146.1:8080")
-    webapp.start()
+    # webapp.start()
     print(arduino_port, lidar_port)
