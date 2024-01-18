@@ -36,37 +36,61 @@ web_to_serial_command = {
     9: 1,
 }
 
+# def check_port_connections():
+#     connections = {"lidar":"", "arduino":""}
+#     ports = glob.glob("/dev/ttyUSB*")
+#     n_ports = len(ports)
+#     print(f"SERIAL PORTS: {ports}")
+#     if n_ports == 1:
+#         connections["arduino"] = ports[0]
+#         connections["lidar"] = "None"
+#         return connections["arduino"], connections["lidar"]
+#     else:
+#         expected_lidar_port = ports[1]
+#         expected_arduino_port = ports[0]
+#         test_conn = adafruit_rplidar.RPLidar(
+#                 None, 
+#                 expected_lidar_port, 
+#                 timeout=3)
+#         try:  
+#             health = test_conn.health
+#             if isinstance(health, tuple):
+#                 connections["lidar"] = expected_lidar_port
+#                 connections["arduino"] = expected_arduino_port
+#             del health
+#             del test_conn
+#             return connections["arduino"], connections["lidar"]
+#         except adafruit_rplidar.RPLidarException:
+#             health = 0
+#             connections["lidar"] = expected_arduino_port
+#             connections["arduino"] = expected_lidar_port
+#             del health
+#             del test_conn
+#             return connections["arduino"], connections["lidar"]
+
 def check_port_connections():
-    connections = {"lidar":"", "arduino":""}
+    connections = {"lidar": None, "arduino": None}
     ports = glob.glob("/dev/ttyUSB*")
     n_ports = len(ports)
     print(f"SERIAL PORTS: {ports}")
-    if n_ports == 1:
+
+    if n_ports >= 1:
         connections["arduino"] = ports[0]
-        connections["lidar"] = "None"
-        return connections["arduino"], connections["lidar"]
-    else:
-        expected_lidar_port = ports[1]
-        expected_arduino_port = ports[0]
-        test_conn = adafruit_rplidar.RPLidar(
-                None, 
-                expected_lidar_port, 
-                timeout=3)
-        try:  
-            health = test_conn.health
-            if isinstance(health, tuple):
-                connections["lidar"] = expected_lidar_port
-                connections["arduino"] = expected_arduino_port
-            del health
+        connections["lidar"] = ports[1] if n_ports > 1 else None
+
+    if connections["lidar"]:
+        try:
+            test_conn = adafruit_rplidar.RPLidar(None, connections["lidar"], timeout=3)
+            if isinstance(test_conn.health, tuple):
+                pass
+            else:
+                connections["lidar"], connections["arduino"] = connections["arduino"], connections["lidar"]
             del test_conn
-            return connections["arduino"], connections["lidar"]
         except adafruit_rplidar.RPLidarException:
-            health = 0
-            connections["lidar"] = expected_arduino_port
-            connections["arduino"] = expected_lidar_port
-            del health
-            del test_conn
-            return connections["arduino"], connections["lidar"]
+            connections["lidar"], connections["arduino"] = connections["arduino"], connections["lidar"]
+
+    return connections["arduino"], connections["lidar"]
+
 
 # def check_port_connection():
 #     connections = {"lidar":"", "arduino":""}
