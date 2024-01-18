@@ -31,9 +31,14 @@ class LIDAR:
         try:
             prev_time = time.time()
             for scan in self.lidar.iter_scans():
+                
+                n_angles = len(scan)
+                lidar_array = []
+                for (_, angle, distance) in scan:
+                    lidar_array.append([angle, distance])
                 c_time = time.time()
-                print(f"dT: {c_time - prev_time} - N: {len(scan)} - SCAN: {scan[:3]}")
-                print()
+                dT = c_time - prev_time
+                print(f"dT: {dT} | n_angles: {n_angles} | data: {lidar_array[:4]}")
                 prev_time = c_time
         except:
             self.lidar.stop()
