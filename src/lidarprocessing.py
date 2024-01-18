@@ -39,8 +39,8 @@ class LIDAR:
                     lidar_array.append([angle, distance])
                 c_time = time.time()
                 dT = c_time - prev_time
-                dT_cum += dT * (int(n != 0))
-                n += 1 * (int(n != 0))
+                dT_cum += dT * (n != 0)
+                n += 1 * (n != 0)
                 print(f"dT: {dT} | n_angles: {n_angles} | data: {lidar_array[:4]}")
                 prev_time = c_time
                 
