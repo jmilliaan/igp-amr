@@ -19,7 +19,7 @@ import glob
 import adafruit_rplidar
 # from picam import PiCam
 # from mapcalc import Map
-# from webapp_interface import WebInterface
+from webapp_interface import WebInterface
 
 manual_command = 5
 web_to_serial_command = {
@@ -60,4 +60,6 @@ def setup_serial_port():
 
 if __name__ == "__main__":
     arduino_port, lidar_port = setup_serial_port()
+    webapp = WebInterface("192.168.146.1:8080")
+    webapp.start()
     print(arduino_port, lidar_port)
