@@ -44,7 +44,7 @@ def check_port_connections():
     if n_ports == 1:
         connections["arduino"] = ports[0]
         connections["lidar"] = ""
-        return connections
+        return connections["arduino"], connections["lidar"]
     else:
         expected_lidar_port = ports[1]
         expected_arduino_port = ports[0]
@@ -59,14 +59,14 @@ def check_port_connections():
                 connections["arduino"] = expected_arduino_port
             del health
             del test_conn
-            return connections
+            return connections["arduino"], connections["lidar"]
         except adafruit_rplidar.RPLidarException:
             health = 0
             connections["lidar"] = expected_arduino_port
             connections["arduino"] = expected_lidar_port
             del health
             del test_conn
-            return connections
+            return connections["arduino"], connections["lidar"]
 
 # def check_port_connection():
 #     connections = {"lidar":"", "arduino":""}
@@ -122,21 +122,9 @@ def send_data(comm_obj:SerialCommunication):
 if __name__ == "__main__":
 
     web_url = "ws://192.168.29.219:8000"
+    arduino_port, lidar_port = check_port_connections()
+    print(arduino_port, lidar_port)
 
-    
-    # drive_comm = SerialCommunication(
-    #         port=lidar_port, 
-    #         baud_rate=9600)
-    ports = check_port_connections()
-    print(ports)
-    # lidar_port = ports["lidar"]
-    # arduino_port = ports["arduino"]
-    # test_lidar = adafruit_rplidar.RPLidar(
-    #     None, 
-    #     port=lidar_port, 
-    #     timeout=3)
-    # print(test_lidar.health)
-    
     # while True:
     #     print("2: Forward, 3: Reverse, 4: Right, 5: Left")
     #     order = int(input("Enter direction: "))
