@@ -43,7 +43,7 @@ def check_port_connections():
     print(f"SERIAL PORTS: {ports}")
     if n_ports == 1:
         connections["arduino"] = ports[0]
-        connections["lidar"] = ""
+        connections["lidar"] = "None"
         return connections["arduino"], connections["lidar"]
     else:
         expected_lidar_port = ports[1]
