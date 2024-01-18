@@ -54,12 +54,12 @@ def check_port_connections():
                 timeout=3)
         try:  
             health = test_conn.health
-            print(health)
+            print(type(health), health)
             del health
             del test_conn
         except adafruit_rplidar.RPLidarException:
             health = 0
-            print(health)
+            print(print(type(health), health))
             del health
             del test_conn
 
