@@ -18,7 +18,7 @@ class LIDAR:
         try:
             for scan in self.lidar.iter_scans():
                 print(scan)
-                time.sleep(0.5)
+                # time.sleep(0.5)
         except KeyboardInterrupt:
             print("Stopping")
             return
