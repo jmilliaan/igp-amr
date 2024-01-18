@@ -17,6 +17,7 @@ Outputs the command to send to the arduino (movement commend)
 from serial_communication import SerialCommunication
 import time
 import glob
+from lidarprocessing import LIDAR
 # from picam import PiCam
 # from mapcalc import Map
 # from webapp_interface import WebInterface
@@ -33,6 +34,22 @@ web_to_serial_command = {
     8: 3,
     9: 1,
 }
+
+def check_port_connections():
+    connections = {"lidar":"", "arduino":""}
+    n_connections = len(connections.keys())
+    ports = glob.glob("/dev/ttyUSB*")
+    n_ports = len(ports)
+    end_connection = False
+
+    if n_ports == 2:
+        for i, port in enumerate(ports):
+            pass
+
+    elif n_ports == 1:
+        connections["lidar"] = ""
+        connections["arduino"] = ports[0]
+        return connections
 
 # def check_port_connection():
 #     connections = {"lidar":"", "arduino":""}
@@ -64,22 +81,6 @@ web_to_serial_command = {
 #         print(f"At least {str(n_connections - n_ports)} device(s) is not connected!")
 #         return (False, connections)
 
-# # def lidar_data(lidar_obj:PyLidar3.YdLidarX4):
-#     try:
-#         scanning_generator = lidar_obj.StartScanning()
-#         while True:
-#             scan_result = next(scanning_generator)
-#             cart = generate_cartesian(scan_result)
-#             bool_map = generate_boolean_spacemap(cart[0], cart[1])
-#             print(bool_map[0][:3])
-
-#             del cart
-#             del bool_map
-            
-#     except Exception as e:
-#         print(f"Lidar scanning error: {e}")
-#     finally:
-#         lidar_obj.Disconnect()
 
 def send_data(comm_obj:SerialCommunication):
     while True:
@@ -105,18 +106,19 @@ if __name__ == "__main__":
 
     web_url = "ws://192.168.29.219:8000"
 
-    # connection_check = check_port_connection()
-    # connection_status = connection_check[0]
-    # lidar_port = connection_check[1]["lidar"]
+    lidar_port = "/dev/ttyUSB1"
     arduino_port = "/dev/ttyUSB0"
     drive_comm = SerialCommunication(
             port=arduino_port, 
             baud_rate=9600)
-    while True:
-        print("2: Forward, 3: Reverse, 4: Right, 5: Left")
-        order = int(input("Enter direction: "))
-        drive_comm.write(order)
-        time.sleep(2)
+    lidar_comm = LIDAR(lidar_port)
+    lidar_comm.scan_lidar()
+    
+    # while True:
+    #     print("2: Forward, 3: Reverse, 4: Right, 5: Left")
+    #     order = int(input("Enter direction: "))
+    #     drive_comm.write(order)
+    #     time.sleep(2)
 
     # if connection_status:
     #     print(connection_check)

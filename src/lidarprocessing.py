@@ -1,5 +1,6 @@
-from rplidar import RPLidar
+from adafruit_rplidar import RPLidar
 import numpy as np
+import time
 
 theta_list_deg = np.arange(360)
 theta_list_rad = np.radians(theta_list_deg)
@@ -9,7 +10,19 @@ sine_list = np.sin(theta_list_rad)
 class LIDAR:
     def __init__(self, port):
         self.port = port
-        self.lidar = RPLidar(self.port)
+        self.lidar = RPLidar(None, self.port, timeout=3)
+        self.max_distance = 3
+    
+    def scan_lidar(self):
+        # scan_data = np.zeros(360)
+        try:
+            for scan in self.lidar.iter_scans():
+                print(scan)
+                time.sleep(0.5)
+        except KeyboardInterrupt:
+            print("Stopping")
+            return
+
         
 
 def get_lidar_scan():
