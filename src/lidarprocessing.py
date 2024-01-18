@@ -30,19 +30,24 @@ class LIDAR:
         time.sleep(0.5)
         try:
             prev_time = time.time()
+            n = 0
+            dT_cum = 0
             for scan in self.lidar.iter_scans():
-                
                 n_angles = len(scan)
                 lidar_array = []
                 for (_, angle, distance) in scan:
                     lidar_array.append([angle, distance])
                 c_time = time.time()
                 dT = c_time - prev_time
+                dT_cum += dT
+                n += 1
                 print(f"dT: {dT} | n_angles: {n_angles} | data: {lidar_array[:4]}")
                 prev_time = c_time
+                
         except:
             self.lidar.stop()
             self.lidar.disconnect()
+            print(f"N data: {n} | average period: {dT_cum / n}")
             print("Stopping")
             return
 
