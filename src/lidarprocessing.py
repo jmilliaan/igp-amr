@@ -29,9 +29,9 @@ class LIDAR:
         self.lidar.start_motor()
         time.sleep(0.5)
         try:
+            start_time = time.time()
             for scan in self.lidar.iter_scans():
-                print(len(scan))
-                print(scan[:6])
+                print(f"ST: {time.time() - start_time} - N: {len(scan)} - SCAN: {scan[:3]}")
                 print()
         except:
             self.lidar.stop()
