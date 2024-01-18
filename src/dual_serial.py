@@ -109,10 +109,11 @@ if __name__ == "__main__":
     lidar_port = "/dev/ttyUSB1"
     arduino_port = "/dev/ttyUSB0"
     drive_comm = SerialCommunication(
-            port=arduino_port, 
+            port=lidar_port, 
             baud_rate=9600)
-    lidar_comm = LIDAR(lidar_port)
-    lidar_comm.stop_lidar()
+    lidar_comm = LIDAR(
+        arduino_port)
+    # lidar_comm.stop_lidar()
 
     # while True:
     #     print("2: Forward, 3: Reverse, 4: Right, 5: Left")
