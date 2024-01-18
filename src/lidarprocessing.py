@@ -29,10 +29,12 @@ class LIDAR:
         self.lidar.start_motor()
         time.sleep(0.5)
         try:
-            start_time = time.time()
+            prev_time = time.time()
             for scan in self.lidar.iter_scans():
-                print(f"ST: {time.time() - start_time} - N: {len(scan)} - SCAN: {scan[:3]}")
+                c_time = time.time()
+                print(f"INTV: {c_time - prev_time} - N: {len(scan)} - SCAN: {scan[:3]}")
                 print()
+                prev_time = c_time
         except:
             self.lidar.stop()
             self.lidar.disconnect()
