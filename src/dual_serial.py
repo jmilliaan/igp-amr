@@ -41,7 +41,7 @@ def check_port_connections():
     n_connections = len(connections.keys())
     ports = glob.glob("/dev/ttyUSB*")
     n_ports = len(ports)
-    
+    print(f"SERIAL PORTS: {ports}")
     if n_ports == 1:
         connections["arduino"] = ports[0]
         connections["lidar"] = ""
