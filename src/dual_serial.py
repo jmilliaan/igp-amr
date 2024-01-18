@@ -18,6 +18,7 @@ from serial_communication import SerialCommunication
 import time
 import glob
 from lidarprocessing import LIDAR
+from adafruit_rplidar import RPLidar
 # from picam import PiCam
 # from mapcalc import Map
 # from webapp_interface import WebInterface
@@ -111,9 +112,8 @@ if __name__ == "__main__":
     drive_comm = SerialCommunication(
             port=lidar_port, 
             baud_rate=9600)
-    lidar_comm = LIDAR(
-        arduino_port)
-    # lidar_comm.stop_lidar()
+    lidar_comm = RPLidar(None, lidar_port, timeout=3)
+    print(lidar_comm.health())
 
     # while True:
     #     print("2: Forward, 3: Reverse, 4: Right, 5: Left")
