@@ -30,7 +30,9 @@ class LIDAR:
         time.sleep(0.5)
         try:
             for scan in self.lidar.iter_scans():
-                print(scan)
+                print(len(scan))
+                print(scan[:6])
+                print()
         except:
             self.lidar.stop()
             self.lidar.disconnect()
