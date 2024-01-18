@@ -112,8 +112,8 @@ if __name__ == "__main__":
             port=arduino_port, 
             baud_rate=9600)
     lidar_comm = LIDAR(lidar_port)
-    lidar_comm.scan_lidar()
-    
+    lidar_comm.stop_lidar()
+
     # while True:
     #     print("2: Forward, 3: Reverse, 4: Right, 5: Left")
     #     order = int(input("Enter direction: "))
