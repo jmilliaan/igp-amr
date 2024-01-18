@@ -113,7 +113,7 @@ if __name__ == "__main__":
             port=lidar_port, 
             baud_rate=9600)
     lidar_comm = RPLidar(None, lidar_port, timeout=3)
-    print(lidar_comm.health())
+    print(lidar_comm.health)
 
     # while True:
     #     print("2: Forward, 3: Reverse, 4: Right, 5: Left")
