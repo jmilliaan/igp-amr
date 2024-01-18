@@ -54,14 +54,21 @@ def check_port_connections():
                 timeout=3)
         try:  
             health = test_conn.health
-            print(type(health), health)
+            if isinstance(health, tuple):
+                print(health)
+                connections["lidar"] = expected_lidar_port
+                connections["arduino"] = expected_arduino_port
             del health
             del test_conn
+            return connections
         except adafruit_rplidar.RPLidarException:
             health = 0
             print(print(type(health), health))
+            connections["lidar"] = expected_arduino_port
+            connections["arduino"] = expected_lidar_port
             del health
             del test_conn
+            return connections
 
 # def check_port_connection():
 #     connections = {"lidar":"", "arduino":""}
@@ -123,8 +130,8 @@ if __name__ == "__main__":
     # drive_comm = SerialCommunication(
     #         port=lidar_port, 
     #         baud_rate=9600)
-    check_port_connections()
-
+    ports = check_port_connections()
+    print(ports)
     # while True:
     #     print("2: Forward, 3: Reverse, 4: Right, 5: Left")
     #     order = int(input("Enter direction: "))
