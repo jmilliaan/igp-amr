@@ -17,11 +17,6 @@ from serial_communication import SerialCommunication
 import time
 import glob
 import adafruit_rplidar
-# from picam import PiCam
-# from mapcalc import Map
-# from webapp_interface import WebInterface
-import asyncio
-import websockets
 
 manual_command = 5
 web_to_serial_command = {
@@ -59,17 +54,11 @@ def setup_serial_port():
 
     return connections["arduino"], connections["lidar"]
 
-async def listen():
-    uri = "ws://192.168.146.1:8080"
-    async with websockets.connect(uri) as websocket:
-        print(f"Connected to {uri}")
-        while True:
-            message = await websocket.recv()
-            print(message)
 
 if __name__ == "__main__":
     arduino_port, lidar_port = setup_serial_port()
-    # webapp = WebInterface("192.168.146.1:8080")
-    # webapp.start()
-    print(arduino_port, lidar_port)
-    asyncio.run(listen())
+    arduino_comm = SerialCommunication(
+        port=arduino_port, 
+        baud_rate=9600)
+    
+    arduino_comm.write(5)
