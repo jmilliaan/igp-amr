@@ -112,7 +112,7 @@ if __name__ == "__main__":
     drive_comm = SerialCommunication(
             port=lidar_port, 
             baud_rate=9600)
-    lidar_comm = RPLidar(None, lidar_port, timeout=3)
+    lidar_comm = RPLidar(None, arduino_port, timeout=3)
     print(lidar_comm.health)
 
     # while True:
