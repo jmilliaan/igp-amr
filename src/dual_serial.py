@@ -38,7 +38,6 @@ web_to_serial_command = {
 
 def check_port_connections():
     connections = {"lidar":"", "arduino":""}
-    n_connections = len(connections.keys())
     ports = glob.glob("/dev/ttyUSB*")
     n_ports = len(ports)
     print(f"SERIAL PORTS: {ports}")
@@ -61,7 +60,7 @@ def check_port_connections():
                 connections["arduino"] = expected_arduino_port
             return connections
         
-        except adafruit_rplidar.RPLidarException:
+        except:
             connections["lidar"] = expected_arduino_port
             connections["arduino"] = expected_lidar_port
             return connections
