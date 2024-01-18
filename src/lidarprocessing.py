@@ -16,6 +16,7 @@ class LIDAR:
     def stop_lidar(self):
         try:
             self.lidar.stop()
+            self.lidar.stop_motor()
             self.lidar.disconnect()
             return True
         except:
@@ -39,8 +40,6 @@ class LIDAR:
                     lidar_array.append([angle, distance])
                 c_time = time.time()
                 dT = np.floor((c_time - prev_time) * 1000)
-                if n == 0:
-                    data_1 = dT
                 dT_cum += dT
                 n += 1
                 print(f"dT: {dT} | n_angles: {n_angles} | data: {lidar_array[:4]}")
@@ -49,7 +48,6 @@ class LIDAR:
         except:
             self.lidar.stop()
             self.lidar.disconnect()
-            print(f"N data: {n} | average period: {dT_cum - data_1 / n - 1}ms")
             print("Stopping")
             return
 
