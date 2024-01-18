@@ -109,9 +109,9 @@ if __name__ == "__main__":
 
     lidar_port = "/dev/ttyUSB1"
     arduino_port = "/dev/ttyUSB0"
-    drive_comm = SerialCommunication(
-            port=lidar_port, 
-            baud_rate=9600)
+    # drive_comm = SerialCommunication(
+    #         port=lidar_port, 
+    #         baud_rate=9600)
     lidar_comm = RPLidar(None, arduino_port, timeout=3)
     print(lidar_comm.health)
 
