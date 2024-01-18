@@ -48,22 +48,20 @@ def check_port_connections():
     else:
         expected_lidar_port = ports[1]
         expected_arduino_port = ports[0]
-        try:
-            test_conn = adafruit_rplidar.RPLidar(
+        test_conn = adafruit_rplidar.RPLidar(
                 None, 
                 expected_lidar_port, 
                 timeout=3)
+        try:  
             health = test_conn.health
             print(health)
-            if health:
-                connections["lidar"] = expected_lidar_port
-                connections["arduino"] = expected_arduino_port
-            return connections
+        except adafruit_rplidar.RPLidarException:
+            health = 0
+            print(health)
         
-        except:
-            connections["lidar"] = expected_arduino_port
-            connections["arduino"] = expected_lidar_port
-            return connections
+            
+        
+        
 
 # def check_port_connection():
 #     connections = {"lidar":"", "arduino":""}
