@@ -129,13 +129,14 @@ if __name__ == "__main__":
     #         baud_rate=9600)
     ports = check_port_connections()
     print(ports)
-    lidar_port = ports["lidar"]
-    arduino_port = ports["arduino"]
-    test_lidar = adafruit_rplidar.RPLidar(
-        None, 
-        port=lidar_port, 
-        timeout=3)
-    print(test_lidar.health)
+    # lidar_port = ports["lidar"]
+    # arduino_port = ports["arduino"]
+    # test_lidar = adafruit_rplidar.RPLidar(
+    #     None, 
+    #     port=lidar_port, 
+    #     timeout=3)
+    # print(test_lidar.health)
+    
     # while True:
     #     print("2: Forward, 3: Reverse, 4: Right, 5: Left")
     #     order = int(input("Enter direction: "))
