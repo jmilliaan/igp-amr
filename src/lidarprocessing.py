@@ -13,13 +13,27 @@ class LIDAR:
         self.lidar = RPLidar(None, self.port, timeout=3)
         self.max_distance = 3
     
+    def stop_lidar(self):
+        try:
+            self.lidar.stop()
+            self.lidar.disconnect()
+            return True
+        except:
+            print("LIDAR Stop Failed")
+            return False
+
     def scan_lidar(self):
-        # scan_data = np.zeros(360)
+        self.stop_lidar()
+        time.sleep(0.5)
+        self.lidar.connect()
+        self.lidar.start_motor()
+        time.sleep(0.5)
         try:
             for scan in self.lidar.iter_scans():
                 print(scan)
-                # time.sleep(0.5)
-        except KeyboardInterrupt:
+        except:
+            self.lidar.stop()
+            self.lidar.disconnect()
             print("Stopping")
             return
 
