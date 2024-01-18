@@ -18,7 +18,7 @@ from serial_communication import SerialCommunication
 import time
 import glob
 from lidarprocessing import LIDAR
-from adafruit_rplidar import RPLidar
+import adafruit_rplidar
 # from picam import PiCam
 # from mapcalc import Map
 # from webapp_interface import WebInterface
@@ -41,16 +41,30 @@ def check_port_connections():
     n_connections = len(connections.keys())
     ports = glob.glob("/dev/ttyUSB*")
     n_ports = len(ports)
-    end_connection = False
-
-    if n_ports == 2:
-        for i, port in enumerate(ports):
-            pass
-
-    elif n_ports == 1:
-        connections["lidar"] = ""
+    
+    if n_ports == 1:
         connections["arduino"] = ports[0]
+        connections["lidar"] = ""
         return connections
+    else:
+        expected_lidar_port = ports[1]
+        expected_arduino_port = ports[0]
+        try:
+            test_conn = adafruit_rplidar.RPLidar(
+                None, 
+                expected_lidar_port, 
+                timeout=3)
+            health = test_conn.health
+            print(health)
+            if health:
+                connections["lidar"] = expected_lidar_port
+                connections["arduino"] = expected_arduino_port
+            return connections
+        
+        except adafruit_rplidar.RPLidarException:
+            connections["lidar"] = expected_arduino_port
+            connections["arduino"] = expected_lidar_port
+            return connections
 
 # def check_port_connection():
 #     connections = {"lidar":"", "arduino":""}
@@ -112,7 +126,7 @@ if __name__ == "__main__":
     # drive_comm = SerialCommunication(
     #         port=lidar_port, 
     #         baud_rate=9600)
-    lidar_comm = RPLidar(None, arduino_port, timeout=3)
+    lidar_comm = adafruit_rplidar.RPLidar(None, arduino_port, timeout=3)
     print(lidar_comm.health)
 
     # while True:
