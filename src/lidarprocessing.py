@@ -1,4 +1,4 @@
-from rplidar import RPLidar
+from PyLidar3 import YdLidarX4
 import numpy as np
 
 theta_list_deg = np.arange(360)
@@ -7,13 +7,21 @@ cosine_list = np.cos(theta_list_rad)
 sine_list = np.sin(theta_list_rad)
 
 class LIDAR:
-    def __init__(self, port):
+    def __init__(self, port, type="YdLidarX4"):
         self.port = port
-        self.lidar = RPLidar(self.port)
-        
+        self.type = type
+        self.lidar = YdLidarX4(self.port)
+        self.lidar.Connect()
 
-def get_lidar_scan():
-    return
+    def get_info(self):
+        return self.lidar.GetDeviceInfo()
+    
+    def get_lidar_scan(self):
+        return self.lidar.StartScanning()
+        
+    def stop_motor(self):
+        self.lidar.stop_motor()
+    
 
 def generate_cartesian(lidar_data):
     distances = np.array(list(lidar_data.values()))
@@ -33,18 +41,13 @@ def generate_boolean_spacemap(x_coords, y_coords, map_size):
     return spacemap
 
 
-# lidar = RPLidar('COM13')
-
-# info = lidar.get_info()
-# print(info) 
-
-# health = lidar.get_health()
-# print(health)
-
-# for i, scan in enumerate(lidar.iter_scans()):
-#     print('%d: Got %d measurments' % (i, len(scan)))
-#     if i > 10:
-#         break
-# lidar.stop()
-# lidar.stop_motor()
-# lidar.disconnect()
+if __name__ == '__main__':
+    lidar = YdLidarX4('COM4')
+    lidar.Connect()
+    if lidar._is_connected:
+        print("Lidar is connected")
+        # print(lidar.GetHealthStatus())
+        distdict = lidar.StartScanning()
+        for item in distdict:
+            print(item)
+            lidar.Disconnect()
